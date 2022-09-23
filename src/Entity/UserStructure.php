@@ -3,12 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserStructureRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserStructureRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,7 +23,7 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    private array $roles = ['ROLE_STRUCTURE'];
 
     /**
      * @var string The hashed password
@@ -46,11 +49,17 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $city = null;
 
-    #[ORM\Column]
+    #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'structure')]
-    private ?UserPartenaire $userPartenaire = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $structureName = null;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -207,14 +216,15 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUserPartenaire(): ?UserPartenaire
+
+    public function getStructureName(): ?string
     {
-        return $this->userPartenaire;
+        return $this->structureName;
     }
 
-    public function setUserPartenaire(?UserPartenaire $userPartenaire): self
+    public function setStructureName(string $structureName): self
     {
-        $this->userPartenaire = $userPartenaire;
+        $this->structureName = $structureName;
 
         return $this;
     }

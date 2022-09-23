@@ -7,10 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserPartenaireRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -22,7 +24,7 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
     private ?string $email = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    private array $roles = ['ROLE_PARTENAIRE'];
 
     /**
      * @var string The hashed password
@@ -33,9 +35,6 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column]
     private ?bool $status = null;
 
-    #[ORM\OneToMany(mappedBy: 'userPartenaire', targetEntity: UserStructure::class)]
-    private Collection $structure;
-
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
@@ -45,8 +44,8 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(length: 100)]
     private ?string $city = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $created_at = null;
+    #[ORM\Column(options: ['default' => 'CURRENT_TIMESTAMP'])]
+    private ?\DateTimeImmutable $created_at;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
@@ -56,7 +55,7 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
 
     public function __construct()
     {
-        $this->structure = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -137,36 +136,6 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
     public function setStatus(bool $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, UserStructure>
-     */
-    public function getStructure(): Collection
-    {
-        return $this->structure;
-    }
-
-    public function addStructure(UserStructure $structure): self
-    {
-        if (!$this->structure->contains($structure)) {
-            $this->structure->add($structure);
-            $structure->setUserPartenaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStructure(UserStructure $structure): self
-    {
-        if ($this->structure->removeElement($structure)) {
-            // set the owning side to null (unless already changed)
-            if ($structure->getUserPartenaire() === $this) {
-                $structure->setUserPartenaire(null);
-            }
-        }
 
         return $this;
     }

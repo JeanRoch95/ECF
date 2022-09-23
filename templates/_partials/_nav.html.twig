@@ -18,17 +18,22 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link text-dark font-italic">
+            <a href="{{ path('partenaire.registry') }}" class="nav-link text-dark font-italic">
                 <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
                 Ajouter partenaires
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link text-dark font-italic">
+            <a href="{{ path('structure.registry') }}" class="nav-link text-dark font-italic">
                 <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
                 Ajouter structures
             </a>
+            <a href="{{ path('logout') }}" class="nav-link text-dark font-italic">
+                <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
+                Me déconnecter
+            </a>
         </li>
+    </ul>
 </div>
 
 <div class="page-content p-5" id="content">
