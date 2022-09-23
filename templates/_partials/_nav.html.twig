@@ -17,6 +17,7 @@
                 Accueil
             </a>
         </li>
+        {% if 'ROLE_ADMIN' in app.user %}
         <li class="nav-item">
             <a href="{{ path('partenaire.registry') }}" class="nav-link text-dark font-italic">
                 <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
@@ -28,6 +29,8 @@
                 <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
                 Ajouter structures
             </a>
+        </li>
+        {% endif %}
             <a href="{{ path('logout') }}" class="nav-link text-dark font-italic">
                 <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
                 Me déconnecter
