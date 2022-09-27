@@ -7,13 +7,15 @@ security:
         # used to reload user from session & other features (e.g. switch_user)
         app_admin_provider:
             entity:
-                class: App\Entity\userAdmin
+                class: App\Entity\UserAdmin
                 property: email
+
 
         app_structure_provider:
             entity:
                 class: App\Entity\UserStructure
                 property: email
+
 
         app_partenaire_provider:
             entity:

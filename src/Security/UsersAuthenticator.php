@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\Entity\UserPartenaire;
+use App\Repository\UserPartenaireRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,6 +46,15 @@ class UsersAuthenticator extends AbstractLoginFormAuthenticator
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
+        }
+
+        $user = $token->getUser();
+
+
+        if(in_array("ROLE_PARTENAIRE", $user->getRoles())){
+            return new RedirectResponse($this->urlGenerator->generate('partenaire.show', ['id' => $token->getUser()->getId()]));
+        } else if (in_array("ROLE_STRUCTURE", $user->getRoles())){
+            return new RedirectResponse($this->urlGenerator->generate('structure.registry', ['id' => $token->getUser()->getId()]));
         }
 
         // For example:

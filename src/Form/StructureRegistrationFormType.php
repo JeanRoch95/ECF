@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Partenaire;
+use App\Entity\UserPartenaire;
 use App\Entity\UserStructure;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -84,22 +87,6 @@ class StructureRegistrationFormType extends AbstractType
                   'class' => 'form-label mt-4'
                 ],
             ])
-            ->add('RGPDconsent', CheckboxType::class, [
-                'mapped' => false,
-                'attr' =>[
-                    'class' => ' mx-4'
-                ],
-                'label' => 'Consentement à l\'utilisation des données RGPD ',
-                'label_attr' => [
-                    'class' => 'form-check-label mt-4'
-                ],
-                'required' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -123,6 +110,15 @@ class StructureRegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+            ->add('userPartenaire', EntityType::class, [
+                'class' => UserPartenaire::class,
+                'label' => 'Partenaire',
+                'label_attr' => [
+                    'class' => 'form-label mt-4 me-4'
+                ],
+                'choice_label' => 'email',
+                'multiple' => false
             ])
         ;
     }

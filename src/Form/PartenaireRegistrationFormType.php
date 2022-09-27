@@ -75,22 +75,6 @@ class PartenaireRegistrationFormType extends AbstractType
                     'class' => 'form-label mt-4'
                 ],
             ])
-            ->add('RGPDconsent', CheckboxType::class, [
-                'mapped' => false,
-                'attr' =>[
-                    'class' => ' mx-4'
-                ],
-                'label' => 'Consentement à l\'utilisation des données RGPD ',
-                'label_attr' => [
-                    'class' => 'form-check-label mt-4'
-                ],
-                'required' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

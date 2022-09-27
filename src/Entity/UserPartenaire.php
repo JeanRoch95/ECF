@@ -53,9 +53,13 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    #[ORM\OneToMany(mappedBy: 'userPartenaire', targetEntity: UserStructure::class)]
+    private Collection $structure;
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->structure = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -199,4 +203,35 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, UserStructure>
+     */
+    public function getStructure(): Collection
+    {
+        return $this->structure;
+    }
+
+    public function addStructure(UserStructure $structure): self
+    {
+        if (!$this->structure->contains($structure)) {
+            $this->structure->add($structure);
+            $structure->setUserPartenaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStructure(UserStructure $structure): self
+    {
+        if ($this->structure->removeElement($structure)) {
+            // set the owning side to null (unless already changed)
+            if ($structure->getUserPartenaire() === $this) {
+                $structure->setUserPartenaire(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

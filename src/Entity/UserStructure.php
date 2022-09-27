@@ -55,6 +55,11 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $structureName = null;
 
+    #[ORM\ManyToOne(inversedBy: 'structure')]
+    private ?UserPartenaire $userPartenaire = null;
+
+
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
@@ -214,4 +219,17 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getUserPartenaire(): ?UserPartenaire
+    {
+        return $this->userPartenaire;
+    }
+
+    public function setUserPartenaire(?UserPartenaire $userPartenaire): self
+    {
+        $this->userPartenaire = $userPartenaire;
+
+        return $this;
+    }
+
 }
