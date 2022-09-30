@@ -36,7 +36,7 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
     private ?string $password = null;
 
     #[ORM\Column]
-    private ?bool $status = null;
+    private bool $status;
 
     #[ORM\Column(length: 255)]
     private ?string $address = null;
@@ -132,7 +132,12 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
         // $this->plainPassword = null;
     }
 
-    public function isStatus(): ?bool
+    public function isStatus(): bool
+    {
+        return $this->status;
+    }
+
+    public function getStatus(): bool
     {
         return $this->status;
     }

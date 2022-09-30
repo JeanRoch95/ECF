@@ -38,7 +38,7 @@ class AppFixtures extends Fixture
             $partenaire
                 ->setEmail($this->faker->email)
                 ->setDescription($this->faker->text(20))
-                ->setStatus(1)
+                ->setStatus(0)
                 ->setPassword($this->passwordHasher->hashPassword($partenaire, 'password'))
                 ->setAddress($this->faker->address)
                 ->setCity($this->faker->city)
@@ -55,7 +55,7 @@ class AppFixtures extends Fixture
             $structure
                 ->setEmail($this->faker->email)
                 ->setDescription($this->faker->text(20))
-                ->setStatus(1)
+                ->setStatus(0)
                 ->setPassword($this->passwordHasher->hashPassword($structure, 'password'))
                 ->setAddress($this->faker->address)
                 ->setCity($this->faker->city)

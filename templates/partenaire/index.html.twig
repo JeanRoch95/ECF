@@ -37,10 +37,18 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Active</h6>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked disabled>
-                                    <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
-                                </div>
+                                <a href="{{ path('permuted', {id: partenaire.id}) }}" role="button">
+                                    <label class="label">
+                                        <div class="form-check form-switch">
+                                            {% if partenaire.status == true %}
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked>
+                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
+                                            {% else %}
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
+                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
+                                            <div class="indicator"></div>
+                                        </div>
+                                </a>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <h6 class="mb-0" style="padding-right: 60%">Nouvelle structure</h6>
@@ -113,9 +121,10 @@
                                     <div class="d-flex align-items-center justify-content-between">
                                         <small class="">{{ structure.structureName }}</small>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked>
                                             <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
                                         </div>
+
                                     </div>
                                     <div class="mb-3" style="height: 5px">
                                     </div>
