@@ -9,6 +9,7 @@ use App\Repository\UserStructureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +17,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class StructureController extends AbstractController
 {
     #[Route('/structure/{id}', name: 'structure.show')]
-    public function index($id, UserStructureRepository $repository): Response
+    #[Security("is_granted('ROLE_STRUCTURE') || user === structure.getUserPartenaire() || is_granted('ROLE_ADMIN') ")]
+    public function index($id, UserStructureRepository $repository, UserStructure $structure): Response
     {
 
         $structure = $repository->find($id);

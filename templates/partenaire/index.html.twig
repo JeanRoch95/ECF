@@ -54,22 +54,27 @@
                                                 <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
                                             {% else %}
                                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
-                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
+                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
+                                            {% endif %}
                                             <div class="indicator"></div>
                                         </div>
                             </li>
                                 {% endif %}
                             {% endif %}
+                            {% if app.user %}
+                                {% if 'ROLE_ADMIN' in app.user.roles %}
                             <li class="list-group-item d-flex justify-content-between">
                                 <h6 class="mb-0" style="padding-right: 60%">Nouvelle structure</h6>
                                 <div class="col-sm-12">
                                     <a class="btn" href="#">Ajouter</a>
                                 </div>
                             </li>
+                                    {% endif %}
+                            {% endif %}
                             <li class="list-group-item d-flex justify-content-between">
                                 <h6 class="mb-0" style="padding-right: 60%">Editer partenaire</h6>
                                 <div class="col-sm-12">
-                                    <a class="btn" href="{{ path('partenaire.edit', {id: partenaire.id}) }}">Editer</a>
+                                    <a class="btn btn-primary" href="{{ path('partenaire.edit', {id: partenaire.id}) }}">Editer</a>
                                 </div>
                             </li>
                         </ul>
