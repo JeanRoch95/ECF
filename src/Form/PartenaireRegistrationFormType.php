@@ -52,7 +52,25 @@ class PartenaireRegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ],
-                'label' => 'Adresse structure',
+                'label' => 'Adresse partenaire',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+            ])
+            ->add('partenaireName', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Nom comlet',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+            ])
+            ->add('phone', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Numéro de téléphone',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
@@ -99,6 +117,11 @@ class PartenaireRegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary mt-4'
+                ]
+            ]);
         ;
     }
 

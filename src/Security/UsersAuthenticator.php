@@ -54,7 +54,7 @@ class UsersAuthenticator extends AbstractLoginFormAuthenticator
         if(in_array("ROLE_PARTENAIRE", $user->getRoles())){
             return new RedirectResponse($this->urlGenerator->generate('partenaire.show', ['id' => $token->getUser()->getId()]));
         } else if (in_array("ROLE_STRUCTURE", $user->getRoles())){
-            return new RedirectResponse($this->urlGenerator->generate('structure.registry', ['id' => $token->getUser()->getId()]));
+            return new RedirectResponse($this->urlGenerator->generate('structure.show', ['id' => $token->getUser()->getId()]));
         }
 
         // For example:

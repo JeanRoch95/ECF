@@ -56,6 +56,12 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\OneToMany(mappedBy: 'userPartenaire', targetEntity: UserStructure::class)]
     private Collection $structure;
 
+    #[ORM\Column(length: 20)]
+    private ?string $phone = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $partenaireName = null;
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
@@ -235,6 +241,30 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
                 $structure->setUserPartenaire(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getPartenaireName(): ?string
+    {
+        return $this->partenaireName;
+    }
+
+    public function setPartenaireName(string $partenaireName): self
+    {
+        $this->partenaireName = $partenaireName;
 
         return $this;
     }

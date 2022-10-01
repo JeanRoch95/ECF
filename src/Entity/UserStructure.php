@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Trait\CreatedAtTrait;
 use App\Repository\UserStructureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -58,11 +59,18 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'structure')]
     private ?UserPartenaire $userPartenaire = null;
 
+    #[ORM\Column(length: 20)]
+    private ?string $phone = null;
+
+    #[ORM\ManyToMany(targetEntity: Permission::class, mappedBy: 'structurePerm')]
+    private Collection $permissions;
+
 
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->permissions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -228,6 +236,45 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUserPartenaire(?UserPartenaire $userPartenaire): self
     {
         $this->userPartenaire = $userPartenaire;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Permission>
+     */
+    public function getPermissions(): Collection
+    {
+        return $this->permissions;
+    }
+
+    public function addPermission(Permission $permission): self
+    {
+        if (!$this->permissions->contains($permission)) {
+            $this->permissions->add($permission);
+            $permission->addStructurePerm($this);
+        }
+
+        return $this;
+    }
+
+    public function removePermission(Permission $permission): self
+    {
+        if ($this->permissions->removeElement($permission)) {
+            $permission->removeStructurePerm($this);
+        }
 
         return $this;
     }

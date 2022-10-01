@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +39,6 @@ class PartenaireController extends AbstractController
 
 
     #[Route('/permuted/{id}', name: 'permuted', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
     #[Entity('partenaire', expr: 'repository.find(id)')]
     public function permutedStatus($id, UserPartenaire $partenaire, EntityManagerInterface $manager, UserPartenaireRepository $repository): \Symfony\Component\HttpFoundation\RedirectResponse
     {
@@ -53,10 +53,6 @@ class PartenaireController extends AbstractController
         $manager->flush();
 
 
-        /*$permute = $partenaire->getStatus() ? false : true;
-        $partenaire->setStatus($permute);
-        $manager->persist($partenaire);
-        $manager->flush();*/
 
 
         return $this->redirectToRoute('partenaire.show', ['id' => $partenaire->getId()]);

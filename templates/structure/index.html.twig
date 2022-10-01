@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('assets/css/partenaire.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/partenaire.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 {% endblock %}
 
 {% block title %}Hello PartenaireController!{% endblock %}
@@ -18,8 +18,8 @@
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                                 <div class="mt-3">
-                                    <h4>{{ partenaire.partenaireName }}</h4>
-                                    <p class="text-muted font-size-sm">Crée le {{ partenaire.address }}</p>
+                                    <h4>{{ structures.email }}</h4>
+                                    <p class="text-muted font-size-sm">{{ structures.address }}</p>
                                 </div>
                             </div>
                         </div>
@@ -27,13 +27,13 @@
                     <div class="card mt-3">
                         <ul class="list-group list-group-flush">
                             {% if app.user %}
-                            {% if 'ROLE_ADMIN' in app.user.roles %}
-                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                {% if 'ROLE_ADMIN' in app.user.roles %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Active</h6>
-                                <a href="{{ path('permuted', {id: partenaire.id}) }}" role="button">
+                                <a href="{{ path('permuted_structure', {id: structures.id}) }}" role="button">
                                     <label class="label">
                                         <div class="form-check form-switch">
-                                            {% if partenaire.status == true %}
+                                            {% if structures.status == true %}
                                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked>
                                                 <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
                                             {% else %}
@@ -43,13 +43,13 @@
                                         </div>
                                 </a>
                             </li>
-                                {% endif %}
+                                    {% endif %}
                                 {% if 'ROLE_PARTENAIRE' in app.user.roles %}
-                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Active</h6>
                                     <label class="label">
                                         <div class="form-check form-switch">
-                                            {% if partenaire.status == true %}
+                                            {% if structures.status == true %}
                                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
                                                 <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
                                             {% else %}
@@ -58,18 +58,28 @@
                                             <div class="indicator"></div>
                                         </div>
                             </li>
-                                {% endif %}
-                            {% endif %}
-                            <li class="list-group-item d-flex justify-content-between">
-                                <h6 class="mb-0" style="padding-right: 60%">Nouvelle structure</h6>
-                                <div class="col-sm-12">
-                                    <a class="btn" href="#">Ajouter</a>
-                                </div>
+                                    {% endif %}
+                                {% if 'ROLE_STRUCTURE' in app.user.roles %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">Active</h6>
+                                    <label class="label">
+                                        <div class="form-check form-switch">
+                                            {% if structures.status == true %}
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
+                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
+                                            {% else %}
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
+                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
+                                            <div class="indicator"></div>
+                                        </div>
+
                             </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <h6 class="mb-0" style="padding-right: 60%">Editer partenaire</h6>
+                                    {% endif %}
+                            {% endif %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0" style="padding-right: 60%">Editer structure</h6>
                                 <div class="col-sm-12">
-                                    <a class="btn" href="{{ path('partenaire.edit', {id: partenaire.id}) }}">Editer</a>
+                                    <a class="btn btn-info" href="{{ path('structure.edit', {id: structures.id}) }}">Editer</a>
                                 </div>
                             </li>
                         </ul>
@@ -84,7 +94,7 @@
                                     <h6 class="mb-0">Nom du partenaire</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ partenaire.partenaireName }}
+                                    {{ structures.email }}
                                 </div>
                             </div>
                             <hr>
@@ -93,7 +103,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ partenaire.email }}
+                                    {{ structures.email }}
                                 </div>
                             </div>
                             <hr>
@@ -102,7 +112,7 @@
                                     <h6 class="mb-0">Téléphone</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ partenaire.phone }}
+                                    {{ structures.email }}
                                 </div>
                             </div>
                             <hr>
@@ -111,7 +121,7 @@
                                     <h6 class="mb-0">Address</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ partenaire.address }}-{{ partenaire.zipcode }}-{{ partenaire.city }}
+                                    {{ structures.address }}
                                 </div>
                             </div>
                             <hr>
@@ -119,29 +129,11 @@
                     </div>
 
 
-                    <div class="row gutters-sm">
+
                         <div class="col-sm-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <h6 class="d-flex align-items-center mb-3">Structures du partenaire</h6>
-                                    </div>
-                                    {% for structure in structures %}
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <small class="">{{ structure.structureName }}</small>
-                                        <a href="{{ path('structure.show', {id: structure.id }) }}">
-                                            <button class="btn btn-primary">Voir</button></a>
-                                    </div>
-                                    <div class="mb-3" style="height: 5px">
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h6 class="d-flex align-items-center mb-3">Permission globales</h6>
+                                    <h6 class="d-flex align-items-center mb-3">Permission</h6>
                                     <div class="d-flex align-items-center justify-content-between">
                                         <small class="">Perm</small>
                                         <div class="form-check form-switch">

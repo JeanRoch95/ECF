@@ -87,6 +87,15 @@ class StructureRegistrationFormType extends AbstractType
                   'class' => 'form-label mt-4'
                 ],
             ])
+            ->add('phone', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Numéro de téléphone',
+                'label_attr' => [
+                  'class' => 'form-label mt-4'
+                ],
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -120,6 +129,11 @@ class StructureRegistrationFormType extends AbstractType
                 'choice_label' => 'email',
                 'multiple' => false
             ])
+            ->add('submit', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary mt-4'
+                ]
+            ]);
         ;
     }
 
