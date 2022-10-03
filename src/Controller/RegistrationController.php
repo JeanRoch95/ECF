@@ -8,7 +8,9 @@ use App\Entity\UserStructure;
 use App\Form\PartenaireRegistrationFormType;
 use App\Form\StructureRegistrationFormType;
 use App\Form\UserPartenaireEditType;
+use App\Form\UserPartenairePasswordType;
 use App\Form\UserStructureEditType;
+use App\Form\UserStructurePasswordType;
 use App\Security\UsersAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -134,6 +136,71 @@ class RegistrationController extends AbstractController
         }
         return $this->render('registration/edit_structure.html.twig', [
             'registrationForm' => $form->createView()
+        ]);
+    }
+
+    #[Route('edit/structure/password/{id}', name: 'structure.edit.password', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_STRUCTURE') and user === structure")]
+    public function editStructurePassword(EntityManagerInterface $manager, Request $request, UserStructure $structure, UserPasswordHasherInterface $hasher): Response
+    {
+
+        $form = $this->createForm(UserStructurePasswordType::class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() AND $form->isValid()){
+            if($hasher->isPasswordValid($structure, $form->getData()['plainPassword'])){
+                    $structure->setPassword(
+                        $hasher->hashPassword(
+                            $structure,
+                            $form->getData()['newPassword']
+                        )
+                );
+                $manager->persist($structure);
+                $manager->flush();
+                return $this->redirectToRoute('structure.show', ['id' => $structure->getId()]);
+            } else {
+                $this->addFlash(
+                    'warning',
+                    'Le mot de passe renseigné est incorrect'
+                );
+            }
+        }
+
+        return $this->render('registration/structure_edit_password.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    #[Route('edit/partenaire/password/{id}', name: 'partenaire.edit.password', methods: ['GET', 'POST'])]
+    public function editPassword(EntityManagerInterface $manager, Request $request, UserPartenaire $partenaire, UserPasswordHasherInterface $hasher): Response
+    {
+
+        $form = $this->createForm(UserPartenairePasswordType::class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() AND $form->isValid()){
+            if($hasher->isPasswordValid($partenaire, $form->getData()['plainPassword'])){
+                $partenaire->setPassword(
+                    $hasher->hashPassword(
+                        $partenaire,
+                        $form->getData()['newPassword']
+                    )
+                );
+                $manager->persist($partenaire);
+                $manager->flush();
+                return $this->redirectToRoute('partenaire.show', ['id' => $partenaire->getId()]);
+            } else {
+                $this->addFlash(
+                    'warning',
+                    'Le mot de passe renseigné est incorrect'
+                );
+            }
+        }
+
+        return $this->render('registration/partenaire_edit_password.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }
