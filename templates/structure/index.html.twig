@@ -76,6 +76,16 @@
                             </li>
                                     {% endif %}
                             {% endif %}
+                            {% if app.user %}
+                                {% if 'ROLE_STRUCTURE' in app.user.roles %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0" style="padding-right: 60%">Changer mot de passe</h6>
+                                        <div class="col-sm-12">
+                                            <a class="btn btn-info" href="{{ path('structure.edit.password', {id: structures.id}) }}">Editer</a>
+                                        </div>
+                                    </li>
+                                    {% endif %}
+                            {% endif %}
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <h6 class="mb-0" style="padding-right: 60%">Editer structure</h6>
                                 <div class="col-sm-12">

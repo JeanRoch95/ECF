@@ -13,9 +13,7 @@ use App\Form\UserStructureEditType;
 use App\Form\UserStructurePasswordType;
 use App\Security\UsersAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +25,7 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 class RegistrationController extends AbstractController
 {
     #[Route('/inscription/structure', name: 'structure.registry', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function registerStructure(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new UserStructure();
@@ -59,6 +58,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/inscription/partenaire', name: 'partenaire.registry')]
+    #[IsGranted('ROLE_ADMIN')]
     public function registerPartenaire(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
         $user = new UserPartenaire();
@@ -173,6 +173,8 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('edit/partenaire/password/{id}', name: 'partenaire.edit.password', methods: ['GET', 'POST'])]
+    #[Security("is_granted('ROLE_PARTENAIRE') and user === partenaire")]
+
     public function editPassword(EntityManagerInterface $manager, Request $request, UserPartenaire $partenaire, UserPasswordHasherInterface $hasher): Response
     {
 

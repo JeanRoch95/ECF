@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PartenaireController extends AbstractController
 {
     #[Route('/partenaire/{id}', name: 'partenaire.show')]
+    #[Security("is_granted('ROLE_ADMIN') || is_granted('ROLE_PARTENAIRE')")]
     public function index($id, UserPartenaireRepository $repository): Response
     {
 
@@ -40,6 +41,7 @@ class PartenaireController extends AbstractController
 
     #[Route('/permuted/{id}', name: 'permuted', methods: ['GET', 'POST'])]
     #[Entity('partenaire', expr: 'repository.find(id)')]
+    #[IsGranted('ROLE_ADMIN')]
     public function permutedStatus($id, UserPartenaire $partenaire, EntityManagerInterface $manager, UserPartenaireRepository $repository): \Symfony\Component\HttpFoundation\RedirectResponse
     {
 
