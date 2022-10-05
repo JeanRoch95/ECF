@@ -64,7 +64,7 @@ class StructureController extends AbstractController
 
         $permission = $permissionRepository->find($permID);
 
-        if($permission->getStatus()->getStatusPermId() === 0){
+        if($permission->getStatus()->isActive() == 0){
             $etat = 1;
         } else
         {

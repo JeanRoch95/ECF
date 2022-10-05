@@ -150,8 +150,12 @@
                                         <a href="{{ path('permuted_permission_structure', {id: structures.id, permID: permission.permID}) }}" role="button">
                                             <label class="label">
                                                 <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
+                                                    {% if permission.status.active == true %}
+                                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked>
                                                         <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
+                                                    {% else %}
+                                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
+                                                        <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
                                                     <div class="indicator"></div>
                                                 </div>
                                         </a>
