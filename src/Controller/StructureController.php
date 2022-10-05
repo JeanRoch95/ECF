@@ -3,16 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Permission;
-use App\Entity\Status;
 use App\Entity\UserStructure;
 use App\Repository\PermissionRepository;
-use App\Repository\StatusRepository;
 use App\Repository\UserStructureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -58,13 +57,12 @@ class StructureController extends AbstractController
         return $this->redirectToRoute('structure.show', ['id' => $structure->getId()]);
     }
 
-    #[Route('/permuted/structure/permission/{id}/{perm_id}', name: 'permuted_permission_structure', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/permuted/structure/permission/{id}/{permID}', name: 'permuted_permission_structure', methods: ['GET', 'POST'])]
     #[Entity('structure', expr: 'repository.find(id)')]
-    public function permutedStatusPermission($id, $perm_id ,Permission $permission, PermissionRepository $permissionRepository, UserStructure $structure, EntityManagerInterface $manager): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function permutedStatusPermission($id, $permID, PermissionRepository $permissionRepository, UserStructure $structure, EntityManagerInterface $manager): RedirectResponse
     {
 
-        $permission = $permissionRepository->find($perm_id);
+        $permission = $permissionRepository->find($permID);
 
         if($permission->getStatus()->getStatusPermId() === 0){
             $etat = 1;
