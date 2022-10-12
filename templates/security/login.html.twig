@@ -1,10 +1,15 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+
+{% endblock %}
+
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
 
-    <section class="container my-3">
+    <section class="text-center container my-3">
         <div class="row">
             <div class="col">
                 <form method="post">
@@ -17,16 +22,16 @@
                             Vous êtes connecté(e) comme {{ app.user.userIdentifier }}, <a href="{{ path('logout') }}">Me déconnecter</a>
                         </div>
                     {% endif %}
-
-                    <h1 class="h3 mb-3 font-weight-normal">Me connecter</h1>
+                    <h1 class="h3 mb-3 font-weight-normal">Fitnezz</h1>
                     <label for="inputEmail">Email</label>
-                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mt-3" autocomplete="email" required autofocus>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control w-25" autocomplete="email" required autofocus>
                     <label for="inputPassword">Mot de passe</label>
-                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                    <input type="password" name="password" id="inputPassword" class="form-control w-25" autocomplete="current-password" required>
 
                     <input type="hidden" name="_csrf_token"
                            value="{{ csrf_token('authenticate') }}"
                     >
+
 
                     {#
                     Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.

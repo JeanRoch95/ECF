@@ -56,6 +56,35 @@ class UserPartenaireRepository extends ServiceEntityRepository implements Passwo
         $this->add($user, true);
     }
 
+    public function getPaginatedPart($filter){
+        $query = $this->createQueryBuilder('a');
+            $query
+                ->where('a.status = 0 OR a.status = 1');
+
+            if($filter !== null ){
+                $query->andWhere('a.status = :PART')
+                    ->setParameter(':PART', $filter);
+            }
+
+
+
+            $query
+                ->orderBy('a.partenaireName');
+        return $query->getQuery()->getResult();
+    }
+
+    public function getTotalPart($filter){
+        $query = $this->createQueryBuilder('a')
+            ->select('COUNT(a)')
+            ->where('a.status = 0 OR a.status = 1');
+        if($filter !== null ){
+            $query->andWhere('a.status IN(:PARTS)')
+                ->setParameter(':PARTS', $filter);
+        }
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
 //    /**
 //     * @return UserPartenaire[] Returns an array of UserPartenaire objects
 //     */

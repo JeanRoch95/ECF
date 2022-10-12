@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{ asset('assets/css/form.css') }}">
+ {% endblock %}
+
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
@@ -14,6 +19,9 @@
                     <legend>Mon identité</legend>
                 {{ form_row(registrationForm.structureName) }}
                 {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
                 {{ form_row(registrationForm.phone) }}
 
                 </fieldset>
@@ -23,16 +31,14 @@
                     {{ form_row(registrationForm.address) }}
                     {{ form_row(registrationForm.zipcode) }}
                     {{ form_row(registrationForm.city) }}
+                    {{ form_row(registrationForm.description) }}
 
-                {{ form_row(registrationForm.plainPassword, {
-                    label: 'Password'
-                }) }}
+
                     {{ form_row(registrationForm.userPartenaire) }}
                 </fieldset>
 
 
                 {{ form_end(registrationForm) }}
-                <button type="submit" class="my-3 btn btn-primary btn-lg">Inscrire</button>
             </div>
         </div>
     </section>

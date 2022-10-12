@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
             $partenaire
                 ->setEmail($this->faker->email)
                 ->setDescription($this->faker->text(20))
-                ->setStatus(0)
+                ->setStatus(mt_rand(0, 1))
                 ->setPhone($this->faker->phoneNumber)
                 ->setPartenaireName($this->faker->name)
                 ->setPassword($this->passwordHasher->hashPassword($partenaire, 'password'))
@@ -61,10 +61,6 @@ class AppFixtures extends Fixture
             $permissions[] = $permission;
             $manager->persist($permission);
 
-            $status = new Status();
-            $status->setStatusPermId($permission)
-            ->setActive(0);
-            $manager->persist($status);
         }
 
         $structures = [];

@@ -1,45 +1,24 @@
 {% extends 'base.html.twig' %}
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         {% endblock %}
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil admin{% endblock %}
 
 {% block body %}
-    <div class="container-table100">
-        <div class="wrap-table100">
-            <div class="table">
-                <div class="row header">
-                    <div class="cell">
-                        Nom du partenaire
-                    </div>
-                    <div class="cell">
-                        Ville
-                    </div>
-                    <div class="cell">
-                        Status
-                    </div>
-                    <div class="cell">
-                        Editer
-                    </div>
-                </div>
-                {% for partenaire in partenaires %}
-                <div class="row">
-                    <div class="cell" data-title="Full Name">
-                        {{ partenaire.email }}
-                    </div>
-                    <div class="cell" data-title="Age">
-                        {{ partenaire.city }}
-                    </div>
-                    <div class="cell" data-title="Job Title">
-                        {{ partenaire.status }}
-                    </div>
-                    <div class="cell" data-title="Editer">
-                        <button type="button" class="btn btn-primary"><a class="btn-more" href={{ path('partenaire.show', {id: partenaire.id}) }}>Voir</a></button>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+    <div class="title-main">
+        <h1>Fitness zone admin</h1>
     </div>
+    <form id="ajax">
+        <div class="form-check d-flex justify-content-end form-switch me-5">
+        <input class="form-check-input mx-3" type="checkbox" name="status" id="status" value="1" >
+        <label class="form-check-label me-4 pe-3" for="status">Structure active seulement</label>
+        </div>
+    </form>
+<div class="container-table100" id="ajax-content">
+{% include '_partials/_content.html.twig' %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/filter.js') }}"></script>
 {% endblock %}

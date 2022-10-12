@@ -11,22 +11,25 @@
 }
 
 .page-content {
-    width: calc(100% - 17rem);
     margin-left: 17rem;
     transition: all 0.4s;
 }
 
-
-#sidebar.active {
+#sidebar{
     margin-left: -17rem;
+}
+#sidebar.active {
+    margin-left: 0px;
+}
 
+#content{
+    margin: 0;
 }
 
 #content.active {
-    width: 100%;
-    margin: 0;
-
+    margin-left: 17rem;;
 }
+
 
 
 

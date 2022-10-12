@@ -26,7 +26,7 @@ class StructureRegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form'
                 ],
                 'label_attr' => [
                   'class' => 'form-label mt-4'
@@ -34,7 +34,7 @@ class StructureRegistrationFormType extends AbstractType
             ])
             ->add('structureName', TextType::class, [
                'attr' => [
-                   'class' => 'form-control'
+                   'class' => 'form-control form'
                ] ,
                 'label' => 'Nom de la structure',
                 'label_attr' => [
@@ -53,7 +53,7 @@ class StructureRegistrationFormType extends AbstractType
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form'
                 ],
                 'label' => 'Description structure',
                 'label_attr' => [
@@ -62,7 +62,7 @@ class StructureRegistrationFormType extends AbstractType
             ])
             ->add('address', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form'
                 ],
                 'label' => 'Adresse structure',
                 'label_attr' => [
@@ -71,7 +71,7 @@ class StructureRegistrationFormType extends AbstractType
             ])
             ->add('zipcode', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form'
                 ],
                 'label' => 'Code postal',
                 'label_attr' => [
@@ -80,7 +80,7 @@ class StructureRegistrationFormType extends AbstractType
             ])
             ->add('city', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form'
                 ],
                 'label' => 'Ville',
                 'label_attr' => [
@@ -89,7 +89,7 @@ class StructureRegistrationFormType extends AbstractType
             ])
             ->add('phone', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form'
                 ],
                 'label' => 'Numéro de téléphone',
                 'label_attr' => [
@@ -102,7 +102,7 @@ class StructureRegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
-                    'class' => 'form-control'
+                    'class' => 'form-control form'
                 ],
                 'label' => 'Mot de passe',
                 'label_attr' => [
@@ -131,8 +131,9 @@ class StructureRegistrationFormType extends AbstractType
             ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-4'
-                ]
+                    'class' => 'btn btn-primary mt-4 mb-4'
+                ],
+                'label' => 'Soumettre'
             ]);
         ;
     }

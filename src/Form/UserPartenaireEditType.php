@@ -17,7 +17,7 @@ class UserPartenaireEditType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form'
                 ],
                 'label_attr' => [
                     'class' => 'form-label mt-4'
@@ -25,7 +25,7 @@ class UserPartenaireEditType extends AbstractType
             ])
             ->add('PartenaireName', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form'
                 ] ,
                 'label' => 'Nom de la structure',
                 'label_attr' => [
@@ -34,7 +34,7 @@ class UserPartenaireEditType extends AbstractType
             ])
             ->add('phone', TextType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control form'
                 ],
                 'label' => 'Numéro de téléphone',
                 'label_attr' => [

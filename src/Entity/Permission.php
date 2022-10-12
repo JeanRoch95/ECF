@@ -21,14 +21,12 @@ class Permission
 
     #[ORM\ManyToMany(targetEntity: UserStructure::class, inversedBy: 'permissions')]
     #[ORM\JoinColumn(name: 'permission_id', referencedColumnName: 'permID')]
-    private Collection $userPermission;
+    private Collection $usersStructures;
 
-    #[ORM\OneToOne(mappedBy: 'statusPermId', cascade: ['persist', 'remove'])]
-    private ?Status $status = null;
 
     public function __construct()
     {
-        $this->userPermission = new ArrayCollection();
+        $this->usersStructures = new ArrayCollection();
     }
 
     public function getPermID(): ?int
@@ -51,45 +49,23 @@ class Permission
     /**
      * @return Collection<int, UserStructure>
      */
-    public function getUserPermission(): Collection
+    public function getUsersStructures(): Collection
     {
-        return $this->userPermission;
+        return $this->usersStructures;
     }
 
-    public function addUserPermission(UserStructure $userPermission): self
+    public function addUsersStructures(UserStructure $usersStructures): self
     {
-        if (!$this->userPermission->contains($userPermission)) {
-            $this->userPermission->add($userPermission);
+        if (!$this->usersStructures->contains($usersStructures)) {
+            $this->usersStructures->add($usersStructures);
         }
 
         return $this;
     }
 
-    public function removeUserPermission(UserStructure $userPermission): self
+    public function removeUsersStructures(UserStructure $usersStructures): self
     {
-        $this->userPermission->removeElement($userPermission);
-
-        return $this;
-    }
-
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): self
-    {
-        // unset the owning side of the relation if necessary
-//        if ($status === null && $this->status !== null) {
-//            $this->status->setStatusPermId(null);
-//        }
-
-        // set the owning side of the relation if necessary
-//        if ($status !== null && $status->getStatusPermId() !== $this) {
-//            $status->setStatusPermId($this);
-//        }
-
-        $this->status = $status;
+        $this->usersStructures->removeElement($usersStructures);
 
         return $this;
     }

@@ -63,7 +63,7 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 20)]
     private ?string $phone = null;
 
-    #[ORM\ManyToMany(targetEntity: Permission::class, mappedBy: 'userPermission')]
+    #[ORM\ManyToMany(targetEntity: Permission::class, mappedBy: 'usersStructures')]
     #[ORM\JoinColumn(name: 'permission_id', referencedColumnName: 'permID')]
     private Collection $permissions;
 
@@ -264,7 +264,7 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->permissions->contains($permission)) {
             $this->permissions->add($permission);
-            $permission->addUserPermission($this);
+            $permission->addUsersStructures($this);
         }
 
         return $this;
@@ -273,7 +273,7 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
     public function removePermission(Permission $permission): self
     {
         if ($this->permissions->removeElement($permission)) {
-            $permission->removeUserPermission($this);
+            $permission->removeUsersStructures($this);
         }
 
         return $this;

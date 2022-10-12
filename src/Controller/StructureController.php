@@ -23,8 +23,8 @@ class StructureController extends AbstractController
     {
 
         $structure = $repository->find($id);
+        $permissions = $permissionRepository->findAll();
 
-        $permission = $structure->getPermissions()->toArray();
 
 
         if(!$structure){
@@ -33,7 +33,7 @@ class StructureController extends AbstractController
 
         return $this->render('structure/index.html.twig', [
             'structures' => $structure,
-            'permissions' => $permission
+            'permissions' => $permissions
         ]);
     }
 
@@ -57,21 +57,21 @@ class StructureController extends AbstractController
         return $this->redirectToRoute('structure.show', ['id' => $structure->getId()]);
     }
 
-    #[Route('/permuted/structure/permission/{id}/{permID}', name: 'permuted_permission_structure', methods: ['GET', 'POST'])]
-    #[Entity('structure', expr: 'repository.find(id)')]
-    public function permutedStatusPermission($id, $permID, PermissionRepository $permissionRepository, UserStructure $structure, EntityManagerInterface $manager): RedirectResponse
+    #[Route('/permuted/structure/permission/{structure}/{permission}', name: 'permuted_permission_structure', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+
+    public function permutedStatusPermission(Permission $permission,
+                                             UserStructure $structure,
+                                             EntityManagerInterface $manager
+                                            ): RedirectResponse
     {
 
-        $permission = $permissionRepository->find($permID);
-
-        if($permission->getStatus()->isActive() == 0){
-            $etat = 1;
+        if($structure->getPermissions()->contains($permission)){
+            $structure->removePermission($permission);
         } else
         {
-            $etat = 0;
+            $structure->addPermission($permission);
         }
-        $permission->getStatus()->setActive($etat);
-        $manager->persist($permission);
         $manager->flush();
 
         return $this->redirectToRoute('structure.show', ['id' => $structure->getId()]);

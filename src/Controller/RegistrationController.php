@@ -45,11 +45,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            return $this->redirectToRoute('main');
         }
 
         return $this->render('registration/register_structure.html.twig', [
@@ -78,11 +74,7 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+            return $this->redirectToRoute('main');
         }
 
         return $this->render('registration/register_partenaire.html.twig', [
@@ -115,7 +107,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('edition/structure/{id}', name: 'structure.edit', methods: ['GET', 'POST'])]
-    #[Security("is_granted('ROLE_STRUCTURE' and user === choosenUser) || user === choosenUser.getUserPartenaire() || is_granted('ROLE_ADMIN')")]
+    #[Security("is_granted('ROLE_STRUCTURE') and user === choosenUser || user === choosenUser.getUserPartenaire() || is_granted('ROLE_ADMIN')")]
     public function editStructure(UserStructure $choosenUser,
                                   Request $request,
                                   EntityManagerInterface $manager,

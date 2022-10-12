@@ -1,16 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/css/partenaire.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 {% endblock %}
 
-{% block title %}Hello PartenaireController!{% endblock %}
+{% block title %}{{ structures.structureName }}{% endblock %}
 
 {% block body %}
 
     <div class="container">
         <div class="main-body">
-
             <div class="row gutters-sm">
                 <div class="col-md-4 mb-3">
                     <div class="card">
@@ -31,7 +29,6 @@
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Active</h6>
                                 <a href="{{ path('permuted_structure', {id: structures.id}) }}" role="button">
-                                    <label class="label">
                                         <div class="form-check form-switch">
                                             {% if structures.status == true %}
                                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked>
@@ -39,7 +36,6 @@
                                             {% else %}
                                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
                                                 <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
-                                            <div class="indicator"></div>
                                         </div>
                                 </a>
                             </li>
@@ -47,30 +43,26 @@
                                 {% if 'ROLE_PARTENAIRE' in app.user.roles %}
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Active</h6>
-                                    <label class="label">
                                         <div class="form-check form-switch">
                                             {% if structures.status == true %}
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled checked>
                                                 <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
                                             {% else %}
                                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
                                                 <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
-                                            <div class="indicator"></div>
                                         </div>
                             </li>
                                     {% endif %}
                                 {% if 'ROLE_STRUCTURE' in app.user.roles %}
                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Active</h6>
-                                    <label class="label">
                                         <div class="form-check form-switch">
                                             {% if structures.status == true %}
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled checked>
                                                 <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
                                             {% else %}
                                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
                                                 <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
-                                            <div class="indicator"></div>
                                         </div>
 
                             </li>
@@ -139,32 +131,72 @@
                     </div>
 
 
-
                         <div class="col-sm-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <h6 class="d-flex align-items-center mb-3">Permission</h6>
+                                    <h6 class="text-center">Permission</h6>
+
                                     {% for permission in permissions %}
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <h6 class="mb-0">{{ permission.name }}</h6>
-                                        <a href="{{ path('permuted_permission_structure', {id: structures.id, permID: permission.permID}) }}" role="button">
-                                            <label class="label">
-                                                <div class="form-check form-switch">
-                                                    {% if permission.status.active == true %}
-                                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked>
-                                                        <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
-                                                    {% else %}
-                                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
-                                                        <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
-                                                    <div class="indicator"></div>
+
+                                        {% if app.user %}
+                                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <h6>{{ permission.name }}</h6>
+                                                    <a href="{{ path('permuted_permission_structure', {structure: structures.id, permission: permission.permID}) }}" role="button">
+                                                        <div class="form-check form-switch">
+                                                            {% if structures.permissions.contains(permission) == true %}
+                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked>
+                                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
+                                                            {% else %}
+                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
+                                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <div class=" mb-3" style="height: 5px">
+                                                    <div class="bg-primary" style="width: 80%"></div>
                                                 </div>
-                                        </a>
-                                    <div class=" mb-3" style="height: 5px">
-                                        <div class="bg-primary" style="width: 80%"></div>
-                                    </div>
+
+                                        {% endif %}
+
+                                            {% if 'ROLE_PARTENAIRE' in app.user.roles %}
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <h6>{{ permission.name }}</h6>
+                                                        <div class="form-check form-switch">
+                                                            {% if structures.permissions.contains(permission) == true %}
+                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled checked>
+                                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
+                                                            {% else %}
+                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
+                                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
+                                                        </div>
+                                                </li>
+                                                <div class=" mb-3" style="height: 5px">
+                                                    <div class="bg-primary" style="width: 80%"></div>
+                                                </div>
+
+                                            {% endif %}
+
+                                            {% if 'ROLE_STRUCTURE' in app.user.roles %}
+                                                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                    <h6>{{ permission.name }}</h6>
+                                                        <div class="form-check form-switch">
+                                                            {% if structures.permissions.contains(permission) == true %}
+                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled checked>
+                                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
+                                                            {% else %}
+                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
+                                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
+                                                        </div>
+                                                </li>
+                                                <div class=" mb-3" style="height: 5px">
+                                                    <div class="bg-primary" style="width: 80%"></div>
+                                                </div>
+
+                                            {% endif %}
+                                            {% endif %}
                                     {% endfor %}
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

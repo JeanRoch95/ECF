@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
 <link rel="stylesheet" href="{{ asset('assets/css/partenaire.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 {% endblock %}
 
-{% block title %}Hello PartenaireController!{% endblock %}
+{% block title %}{{ partenaire.partenaireName }}{% endblock %}
 
+{% block nav %}
+    {% endblock %}
 {% block body %}
 
     <div class="container">
+        <h1>{{ partenaire.partenaireName }}</h1>
         <div class="main-body">
 
             <div class="row gutters-sm">
@@ -28,9 +30,25 @@
                         <ul class="list-group list-group-flush">
                             {% if app.user %}
                             {% if 'ROLE_ADMIN' in app.user.roles %}
+
+                                <div class="modal-container">
+
+                                    <div class="overlay modal-trigger"></div>
+
+                                    <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="dialogDesc">
+                                        <button
+                                                aria-label="close modal"
+                                                class="close-modal modal-trigger">X</button>
+                                        <h1 id="modalTitle">Voici du Contenu</h1>
+                                        <p id="dialogDesc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut nam exercitationem nihil veritatis sapiente quia.</p>
+                                    </div>
+
+                                </div>
+
+
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Active</h6>
-                                <a href="{{ path('permuted', {id: partenaire.id}) }}" role="button">
+                                <a class="modal-btn modal-trigger" href="{{ path('permuted', {id: partenaire.id}) }}" role="button">
                                     <label class="label">
                                         <div class="form-check form-switch">
                                             {% if partenaire.status == true %}
@@ -47,10 +65,9 @@
                                 {% if 'ROLE_PARTENAIRE' in app.user.roles %}
                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                 <h6 class="mb-0">Active</h6>
-                                    <label class="label">
                                         <div class="form-check form-switch">
                                             {% if partenaire.status == true %}
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked disabled>
                                                 <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
                                             {% else %}
                                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" disabled>
@@ -63,16 +80,10 @@
                             {% endif %}
                             {% if app.user %}
                                 {% if 'ROLE_ADMIN' in app.user.roles %}
-                            <li class="list-group-item d-flex justify-content-between">
-                                <h6 class="mb-0" style="padding-right: 60%">Nouvelle structure</h6>
-                                <div class="col-sm-12">
-                                    <a class="btn" href="#">Ajouter</a>
-                                </div>
-                            </li>
-                                    <li class="list-group-item d-flex justify-content-between">
-                                        <h6 class="mb-0" style="padding-right: 60%">Editer information partenaire</h6>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0" style="padding-right: 57%">Editer partenaire</h6>
                                         <div class="col-sm-12">
-                                            <a class="btn btn-primary" href="{{ path('partenaire.edit', {id: partenaire.id}) }}">Editer</a>
+                                            <a class="btn btn-info" href="{{ path('partenaire.edit', {id: partenaire.id}) }}">Editer</a>
                                         </div>
                                     </li>
                                     {% endif %}
@@ -83,10 +94,10 @@
                                             <a class="btn btn-primary" href="{{ path('partenaire.edit.password', {id: partenaire.id}) }}">Editer</a>
                                         </div>
                                     </li>
-                                    <li class="list-group-item d-flex justify-content-between">
-                                        <h6 class="mb-0" style="padding-right: 60%">Editer utilisateur</h6>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0" style="padding-right: 57%">Editer partenaire</h6>
                                         <div class="col-sm-12">
-                                            <a class="btn btn-primary" href="{{ path('partenaire.edit', {id: partenaire.id}) }}">Editer</a>
+                                            <a class="btn btn-info" href="{{ path('partenaire.edit', {id: partenaire.id}) }}">Editer</a>
                                         </div>
                                     </li>
                                     {% endif %}
@@ -157,63 +168,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h6 class="d-flex align-items-center mb-3">Permission globales</h6>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <small class="">Perm</small>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
-                                            <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
-                                        </div>
-                                    </div>
-                                    <div class=" mb-3" style="height: 5px">
-                                        <div class="bg-primary" style="width: 80%"></div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <small class="">Web Design</small>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
-                                            <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
-                                        </div>
-                                    </div>
-                                    <div class=" mb-3" style="height: 5px">
-                                        <div class="bg-primary" ></div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <small class="">Web Design</small>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
-                                            <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3" style="height: 5px">
-                                        <div class="bg-primary"></div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <small class="">Web Design</small>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
-                                            <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3" style="height: 5px">
-                                        <div class="bg-primary"></div>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <small class="">Web Design</small>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked disabled>
-                                            <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3" style="height: 5px">
-                                        <div class="bg-primary" ></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -221,4 +175,8 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/modal.js') }}"></script>
 {% endblock %}
