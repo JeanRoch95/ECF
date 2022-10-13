@@ -14,7 +14,7 @@
         <div class="main-body">
 
             <div class="row gutters-sm">
-                <div class="col-md-4 mb-3">
+                <div class="col-lg-4 mb-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
@@ -89,13 +89,13 @@
                                     {% endif %}
                                 {% if 'ROLE_PARTENAIRE' in app.user.roles %}
                                     <li class="list-group-item d-flex justify-content-between">
-                                        <h6 class="mb-0" style="padding-right: 60%">Changer mot de passe</h6>
+                                        <h6 class="mb-0" >Changer mot de passe</h6>
                                         <div class="col-sm-12">
-                                            <a class="btn btn-primary" href="{{ path('partenaire.edit.password', {id: partenaire.id}) }}">Editer</a>
+                                            <a class="btn btn-info" href="{{ path('partenaire.edit.password', {id: partenaire.id}) }}">Editer</a>
                                         </div>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <h6 class="mb-0" style="padding-right: 57%">Editer partenaire</h6>
+                                        <h6 class="mb-1">Editer partenaire</h6>
                                         <div class="col-sm-12">
                                             <a class="btn btn-info" href="{{ path('partenaire.edit', {id: partenaire.id}) }}">Editer</a>
                                         </div>
@@ -106,41 +106,41 @@
                     </div>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-lg-8">
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <h6 class="mb-0">Nom du partenaire</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-8 text-secondary">
                                     {{ partenaire.partenaireName }}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <h6 class="mb-0">Email</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-8 text-secondary">
                                     {{ partenaire.email }}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <h6 class="mb-0">Téléphone</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-8 text-secondary">
                                     {{ partenaire.phone }}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <h6 class="mb-0">Address</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-8 text-secondary">
                                     {{ partenaire.address }}-{{ partenaire.zipcode }}-{{ partenaire.city }}
                                 </div>
                             </div>
@@ -150,13 +150,14 @@
 
 
                     <div class="row gutters-sm">
-                        <div class="col-sm-6 mb-3">
+                        <div class="col-lg-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
                                         <h6 class="d-flex align-items-center mb-3">Structures du partenaire</h6>
                                     </div>
                                     {% for structure in structures %}
+
                                     <div class="d-flex align-items-center justify-content-between">
                                         <small class="">{{ structure.structureName }}</small>
                                         <a href="{{ path('structure.show', {id: structure.id }) }}">

@@ -3,16 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\UserPartenaire;
+use App\Entity\UserStructure;
 use App\Repository\PermissionRepository;
 use App\Repository\UserPartenaireRepository;
 use App\Repository\UserStructureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -47,8 +46,19 @@ class PartenaireController extends AbstractController
     #[Route('/permuted/{id}', name: 'permuted', methods: ['GET', 'POST'])]
     #[Entity('partenaire', expr: 'repository.find(id)')]
     #[IsGranted('ROLE_ADMIN')]
-    public function permutedStatus($id, UserPartenaire $partenaire, EntityManagerInterface $manager, UserPartenaireRepository $repository): \Symfony\Component\HttpFoundation\RedirectResponse
+    public function permutedStatus($id, UserPartenaire $partenaire, EntityManagerInterface $manager, UserStructureRepository $structureRepository): \Symfony\Component\HttpFoundation\RedirectResponse
     {
+
+        $structures = $structureRepository->findBy(
+            ['userPartenaire' => $id]
+        );
+
+        foreach ($structures as $structure) {
+            if ($structure->isStatus() == 1) {
+                $structure->setStatus(0);
+            }
+                $manager->flush();
+        }
 
         if($partenaire->getStatus() == 0){
             $etat = 1;

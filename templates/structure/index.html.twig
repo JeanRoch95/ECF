@@ -8,9 +8,10 @@
 {% block body %}
 
     <div class="container">
+        <h1>{{ structures.structureName }}</h1>
         <div class="main-body">
             <div class="row gutters-sm">
-                <div class="col-md-4 mb-3">
+                <div class="col-lg-4 mb-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
@@ -88,41 +89,41 @@
                     </div>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-lg-8">
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <h6 class="mb-0">Nom de la strucutre</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-8 text-secondary">
                                     {{ structures.structureName }}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <h6 class="mb-0">Email</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-8 text-secondary">
                                     {{ structures.email }}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <h6 class="mb-0">Téléphone</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-8 text-secondary">
                                     {{ structures.phone }}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <h6 class="mb-0">Address</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
+                                <div class="col-sm-8 text-secondary">
                                     {{ structures.address }} - {{ structures.zipcode }} - {{ structures.city }}
                                 </div>
                             </div>
@@ -131,7 +132,7 @@
                     </div>
 
 
-                        <div class="col-sm-6 mb-3">
+                        <div class="mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h6 class="text-center">Permission</h6>
@@ -142,16 +143,11 @@
                                             {% if 'ROLE_ADMIN' in app.user.roles %}
                                                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                     <h6>{{ permission.name }}</h6>
-                                                    <a href="{{ path('permuted_permission_structure', {structure: structures.id, permission: permission.permID}) }}" role="button">
                                                         <div class="form-check form-switch">
-                                                            {% if structures.permissions.contains(permission) == true %}
-                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled" checked>
+                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled"  {{ structures.permissions.contains(permission) == true ? "checked" }} disabled>
+                                                                <button class="btn btn-info button-modal" data-bs-target="#exampleModal" data-bs-toggle="modal" data-url="{{ path('permuted_permission_structure', {structure: structures.id, permission: permission.permID}) }}">changer</button>
                                                                 <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>
-                                                            {% else %}
-                                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckCheckedDisabled">
-                                                                <label class="form-check-label" for="flexSwitchCheckCheckedDisabled"></label>                                            {% endif %}
                                                         </div>
-                                                    </a>
                                                 </li>
                                                 <div class=" mb-3" style="height: 5px">
                                                     <div class="bg-primary" style="width: 80%"></div>
@@ -205,4 +201,9 @@
         </div>
     </div>
 
+        {% include "_partials/_modal.html.twig" with {"body": "Confirmer ?"} %}
+
+        {% block javascripts %}
+            <script src="{{ asset('assets/js/modal.js') }}">
+            {% endblock %}
 {% endblock %}

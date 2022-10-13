@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Permission;
 use App\Entity\UserStructure;
 use App\Repository\PermissionRepository;
+use App\Repository\UserPartenaireRepository;
 use App\Repository\UserStructureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -24,6 +25,8 @@ class StructureController extends AbstractController
 
         $structure = $repository->find($id);
         $permissions = $permissionRepository->findAll();
+
+
 
 
 
