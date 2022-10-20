@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Entity\UserPartenaire;
 use App\Entity\UserStructure;
 use App\Form\PartenaireRegistrationFormType;
@@ -11,19 +10,15 @@ use App\Form\UserPartenaireEditType;
 use App\Form\UserPartenairePasswordType;
 use App\Form\UserStructureEditType;
 use App\Form\UserStructurePasswordType;
-use App\Repository\UserStructureRepository;
 use App\service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class RegistrationController extends AbstractController
@@ -71,15 +66,20 @@ class RegistrationController extends AbstractController
 
             $service->sendEmail(
                 $user->getEmail(),
-                'registration/confirmation_email.html.twig',
+                'pages/registration/confirmation_email.html.twig',
                 ['signedUrl' => $signatureComponents->getSignedUrl()]
+            );
+
+            $this->addFlash(
+                'success',
+                'Structure Crée'
             );
 
             return $this->redirectToRoute('main');
         }
 
 
-        return $this->render('registration/register_structure.html.twig', [
+        return $this->render('pages/registration/structure/register_structure.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
@@ -117,14 +117,19 @@ class RegistrationController extends AbstractController
 
             $service->sendEmail(
                 $user->getEmail(),
-                'registration/confirmation_email.html.twig',
+                'pages/registration/confirmation_email.html.twig',
                 ['signedUrl' => $signatureComponents->getSignedUrl()]
+            );
+
+            $this->addFlash(
+                'success',
+                'Partenaire Crée'
             );
 
             return $this->redirectToRoute('main');
         }
 
-        return $this->render('registration/register_partenaire.html.twig', [
+        return $this->render('pages/registration/partenaire/register_partenaire.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
@@ -147,10 +152,15 @@ class RegistrationController extends AbstractController
                 $manager->persist($user);
                 $manager->flush();
 
+            $this->addFlash(
+                'success',
+                'Partenaire Modifié'
+            );
+
                 return $this->redirectToRoute('partenaire.show', ['id' => $choosenUser->getId()]);
 
         }
-        return $this->render('registration/edit_partenaire.html.twig', [
+        return $this->render('pages/registration/partenaire/edit_partenaire.html.twig', [
             'registrationForm' => $form->createView()
         ]);
     }
@@ -172,11 +182,15 @@ class RegistrationController extends AbstractController
                 $manager->persist($user);
                 $manager->flush();
 
+            $this->addFlash(
+                'success',
+                'Structure modifiée'
+            );
 
                 return $this->redirectToRoute('structure.show', ['id' => $choosenUser->getId()]);
 
         }
-        return $this->render('registration/edit_structure.html.twig', [
+        return $this->render('pages/registration/structure/edit_structure.html.twig', [
             'registrationForm' => $form->createView()
         ]);
     }
@@ -200,6 +214,12 @@ class RegistrationController extends AbstractController
                 );
                 $manager->persist($structure);
                 $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Mot de passe modifié'
+                );
+
                 return $this->redirectToRoute('structure.show', ['id' => $structure->getId()]);
             } else {
                 $this->addFlash(
@@ -209,7 +229,7 @@ class RegistrationController extends AbstractController
             }
         }
 
-        return $this->render('registration/structure_edit_password.html.twig', [
+        return $this->render('pages/registration/structure/structure_edit_password.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -234,6 +254,12 @@ class RegistrationController extends AbstractController
                 );
                 $manager->persist($partenaire);
                 $manager->flush();
+
+                $this->addFlash(
+                    'success',
+                    'Mot de passe modifié'
+                );
+
                 return $this->redirectToRoute('partenaire.show', ['id' => $partenaire->getId()]);
             } else {
                 $this->addFlash(
@@ -243,7 +269,7 @@ class RegistrationController extends AbstractController
             }
         }
 
-        return $this->render('registration/partenaire_edit_password.html.twig', [
+        return $this->render('pages/registration/partenaire/partenaire_edit_password.html.twig', [
             'form' => $form->createView()
         ]);
     }

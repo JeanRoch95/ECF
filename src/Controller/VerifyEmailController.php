@@ -54,7 +54,7 @@ class VerifyEmailController extends AbstractController
 
         $this->addFlash('success', 'Votre email a bien été vérifié');
 
-        return $this->redirectToRoute('structure.show', ['id' => $id]);
+        return $this->redirectToRoute('structure.edit.password', ['id' => $id]);
     }
 
     #[Route('checked', name: 'registration.verify.partenaire')]
@@ -88,6 +88,6 @@ class VerifyEmailController extends AbstractController
 
         $this->addFlash('success', 'Votre email a bien été vérifié');
 
-        return $this->redirectToRoute('partenaire.show', ['id' => $id]);
+        return $this->redirectToRoute('partenaire.edit.password', ['id' => $id]);
     }
 }

@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class PartenaireController extends AbstractController
 {
     #[Route('/partenaire/{id}', name: 'partenaire.show')]
-    #[Security("is_granted('ROLE_ADMIN') || is_granted('ROLE_PARTENAIRE')")]
+    #[Security("is_granted('ROLE_ADMIN') || (is_granted('ROLE_PARTENAIRE') and user === repository.find(id))")]
     public function index($id, UserPartenaireRepository $repository, PermissionRepository $permissionRepository): Response
     {
 
@@ -36,7 +36,7 @@ class PartenaireController extends AbstractController
             return $this->redirectToRoute('main');
         }
 
-        return $this->render('partenaire/index.html.twig', [
+        return $this->render('pages/partenaire/index.html.twig', [
             'partenaire' => $partenaire,
             'structures' => $structurePart,
             'permissions' => $permissions

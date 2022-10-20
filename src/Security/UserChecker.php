@@ -13,7 +13,6 @@ class UserChecker implements UserCheckerInterface
 
     public function checkPreAuth(UserInterface $user): void
     {
-
         if($user->isIsVerified() == 0){
             throw new CustomUserMessageAccountStatusException('Veuillez activer votre compte');
         }

@@ -53,6 +53,7 @@ class UserStructureEditType extends AbstractType
                 'attr' => [
                     'class' => 'form-control form'
                 ],
+                'required' => false,
                 'label' => 'Numéro de téléphone',
                 'label_attr' => [
                     'class' => 'form-label mt-4'

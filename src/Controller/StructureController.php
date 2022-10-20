@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class StructureController extends AbstractController
 {
     #[Route('/structure/{id}', name: 'structure.show')]
-    #[Security("is_granted('ROLE_STRUCTURE') || user === structure.getUserPartenaire() || is_granted('ROLE_ADMIN') ")]
+    #[Security("(is_granted('ROLE_STRUCTURE') and user === repository.find(id)) || user === structure.getUserPartenaire() || is_granted('ROLE_ADMIN') ")]
     public function index($id,UserStructure $structure, PermissionRepository $permissionRepository, UserStructureRepository $repository): Response
     {
 
@@ -34,7 +34,7 @@ class StructureController extends AbstractController
             $this->redirectToRoute('main');
         }
 
-        return $this->render('structure/index.html.twig', [
+        return $this->render('pages/structure/index.html.twig', [
             'structures' => $structure,
             'permissions' => $permissions
         ]);

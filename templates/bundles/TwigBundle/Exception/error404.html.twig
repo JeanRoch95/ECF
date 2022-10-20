@@ -1,5 +1,13 @@
 {% extends "base.html.twig" %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/404.css') }}">
+{% endblock %}
+
 
 {% block body %}
-<p>Texte hello</p>
+    <div class="error container">
+        <h1>Ouuuuups!! Erreur 404</h1>
+        <p>Revenir au menu</p>
+    </div>
+
 {% endblock %}

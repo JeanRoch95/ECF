@@ -10,6 +10,17 @@
 {% block body %}
 
     <div class="container">
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-danger mt-4 mb-4 w-25 m-auto">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4 mb-4 w-25 m-auto">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+
         <h1>{{ partenaire.partenaireName }}</h1>
         <div class="main-body">
 
@@ -113,7 +124,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <h6 class="mb-0">Address</h6>
+                                    <h6 class="mb-0">Adresse</h6>
                                 </div>
                                 <div class="col-sm-8 text-secondary">
                                     {{ partenaire.address }}-{{ partenaire.zipcode }}-{{ partenaire.city }}

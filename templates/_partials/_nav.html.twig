@@ -3,11 +3,11 @@
 {% endblock %}
 <div class="vertical-nav bg-white" id="sidebar">
     <div class="py-4 px-3 mb-4 bg-light">
-        <div class="media d-flex align-items-center"><img src="https://bootstrapious.com/i/snippets/sn-v-nav/avatar.png" alt="..." width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+        <div class="media d-flex align-items-center">
             <div class="media-body">
                 {% if app.user %}
                     {% if 'ROLE_ADMIN' in app.user.roles %}
-                        <h4 class="m-0">User Admin</h4>
+                        <h4 class="m-0">Admin</h4>
                     {% endif %}
                     {% if 'ROLE_PARTENAIRE' in app.user.roles %}
                         <h4 class="m-0">Gestion partenaire</h4>
@@ -62,15 +62,7 @@
     <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i class="fa fa-bars mr-2"></i><small class="text-uppercase font-weight-bold">Menu</small></button>
 </div>
 
-<script>
 
-    const btn = document.querySelector('#sidebarCollapse');
-    const sidebar = document.querySelector('#sidebar');
-    const content = document.querySelector('#content');
-
-    function click(){
-        sidebar.classList.toggle('active')
-        content.classList.toggle('active')
-    }
-    btn.addEventListener("click", click);
-</script>
+{% block javascripts %}
+    <script src="{{ asset('assets/js/nav.js') }}"></script>
+{% endblock %}

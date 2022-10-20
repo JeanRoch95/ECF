@@ -10,6 +10,11 @@
         <h2>Liste des partenaires</h2>
     </div>
 
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4 mb-4 w-25 m-auto">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
 
     <form class="form-inline my-2 my-lg-0" id="form_search" data-path="{{ path('partenaire.search') }}" method="POST">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
