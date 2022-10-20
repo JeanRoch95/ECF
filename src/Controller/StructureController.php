@@ -46,14 +46,24 @@ class StructureController extends AbstractController
     public function permutedStatus($id, UserStructure $structure, EntityManagerInterface $manager): \Symfony\Component\HttpFoundation\RedirectResponse
     {
 
-        if($structure->isStatus() == 0){
-            $etat = 1;
-        } else
-        {
-            $etat = 0;
+        if($structure->getUserPartenaire()->getStatus() == 0){
+            $this->addFlash(
+                'warning',
+                'Le partenaire doit etre actif',
+            );
+        } else {
+            if($structure->isStatus() == 0){
+                $etat = 1;
+            } else
+            {
+                $etat = 0;
+            }
+            $structure->setStatus($etat);
+            $structure->setIsVerified($etat);
+            $manager->flush();
         }
-        $structure->setStatus($etat);
-        $manager->flush();
+
+
 
 
 
@@ -71,9 +81,17 @@ class StructureController extends AbstractController
 
         if($structure->getPermissions()->contains($permission)){
             $structure->removePermission($permission);
+            $this->addFlash(
+                'success',
+                'Permission retirée'
+            );
         } else
         {
             $structure->addPermission($permission);
+            $this->addFlash(
+                'success',
+                'permission ajoutée '
+            );
         }
         $manager->flush();
 

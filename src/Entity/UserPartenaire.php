@@ -11,11 +11,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserPartenaireRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[Vich\Uploadable]
 class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
     use CreatedAtTrait;
 
     #[ORM\Id]
@@ -35,6 +39,12 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column]
     private ?string $password = null;
 
+    #[Vich\UploadableField(mapping: 'user_images', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(type: 'string')]
+    private ?string $imageName = null;
+
     #[ORM\Column]
     private bool $status;
 
@@ -50,9 +60,6 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
-
     #[ORM\OneToMany(mappedBy: 'userPartenaire', targetEntity: UserStructure::class)]
     private Collection $structure;
 
@@ -62,9 +69,14 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
     #[ORM\Column(length: 255)]
     private ?string $partenaireName = null;
 
+    #[ORM\Column]
+    private ?bool $isVerified = false;
+
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
         $this->structure = new ArrayCollection();
     }
 
@@ -138,6 +150,32 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
         // $this->plainPassword = null;
     }
 
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updated_at = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
     public function isStatus(): bool
     {
         return $this->status;
@@ -203,17 +241,6 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, UserStructure>
@@ -268,5 +295,19 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
 
         return $this;
     }
+
+    public function isIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+
 
 }

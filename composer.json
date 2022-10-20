@@ -42,10 +42,12 @@
         "symfony/validator": "6.0.*",
         "symfony/web-link": "6.0.*",
         "symfony/yaml": "6.0.*",
+        "symfonycasts/verify-email-bundle": "^1.12",
         "twig/cssinliner-extra": "^3.4",
         "twig/extra-bundle": "^3.4",
         "twig/inky-extra": "^3.4",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "vich/uploader-bundle": "^1.21"
     },
     "config": {
         "allow-plugins": {

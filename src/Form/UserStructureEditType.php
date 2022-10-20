@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserStructureEditType extends AbstractType
 {
@@ -42,6 +43,15 @@ class UserStructureEditType extends AbstractType
             ->add('phone', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
+                ],
+                'label' => 'Numéro de téléphone',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ],
+            ])
+            ->add('imageFile', VichImageType::class, [
+                'attr' => [
+                    'class' => 'form-control form'
                 ],
                 'label' => 'Numéro de téléphone',
                 'label_attr' => [

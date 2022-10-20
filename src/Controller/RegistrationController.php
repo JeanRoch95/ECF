@@ -11,22 +11,39 @@ use App\Form\UserPartenaireEditType;
 use App\Form\UserPartenairePasswordType;
 use App\Form\UserStructureEditType;
 use App\Form\UserStructurePasswordType;
-use App\Security\UsersAuthenticator;
+use App\Repository\UserStructureRepository;
+use App\service\MailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class RegistrationController extends AbstractController
 {
+    private VerifyEmailHelperInterface $verifyEmailHelper;
+
+    public function __construct(VerifyEmailHelperInterface $verifyEmailHelper)
+    {
+        $this->verifyEmailHelper = $verifyEmailHelper;
+    }
+
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     #[Route('/inscription/structure', name: 'structure.registry', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
-    public function registerStructure(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function registerStructure(Request $request,
+                                      UserPasswordHasherInterface $userPasswordHasher,
+                                      EntityManagerInterface $entityManager,
+                                      MailService $service): Response
     {
         $user = new UserStructure();
         $form = $this->createForm(StructureRegistrationFormType::class, $user);
@@ -45,17 +62,35 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
+            $signatureComponents = $this->verifyEmailHelper->generateSignature(
+                'registration.verify.structure',
+                $user->getId(),
+                $user->getEmail(),
+                ['id' => $user->getId()]
+            );
+
+            $service->sendEmail(
+                $user->getEmail(),
+                'registration/confirmation_email.html.twig',
+                ['signedUrl' => $signatureComponents->getSignedUrl()]
+            );
+
             return $this->redirectToRoute('main');
         }
+
 
         return $this->render('registration/register_structure.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
 
+
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     #[Route('/inscription/partenaire', name: 'partenaire.registry')]
     #[IsGranted('ROLE_ADMIN')]
-    public function registerPartenaire(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, UsersAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
+    public function registerPartenaire(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, MailService $service): Response
     {
         $user = new UserPartenaire();
         $form = $this->createForm(PartenaireRegistrationFormType::class, $user);
@@ -72,7 +107,19 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-            // do anything else you need here, like send an email
+
+            $signatureComponents = $this->verifyEmailHelper->generateSignature(
+                'registration.verify.partenaire',
+                $user->getId(),
+                $user->getEmail(),
+                ['id' => $user->getId()]
+            );
+
+            $service->sendEmail(
+                $user->getEmail(),
+                'registration/confirmation_email.html.twig',
+                ['signedUrl' => $signatureComponents->getSignedUrl()]
+            );
 
             return $this->redirectToRoute('main');
         }
@@ -81,6 +128,8 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+
 
     #[Route('edition/partenaire/{id}', name: 'partenaire.edit', methods: ['GET', 'POST'])]
     #[Security("is_granted('ROLE_PARTENAIRE') and user === choosenUser || is_granted('ROLE_ADMIN')")]
@@ -122,6 +171,7 @@ class RegistrationController extends AbstractController
                 $user = $form->getData();
                 $manager->persist($user);
                 $manager->flush();
+
 
                 return $this->redirectToRoute('structure.show', ['id' => $choosenUser->getId()]);
 

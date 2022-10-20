@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class MainController extends AbstractController
 {
@@ -34,5 +35,11 @@ class MainController extends AbstractController
         $partenaire = $repository->findAll();
 
         return $this->render('main/index.html.twig', compact('partenaires', 'total'));
+    }
+
+    #[Route('partenaire/search', name: 'partenaire.search', methods: ['GET', 'POST'])]
+    public function search(Request $request, UserPartenaireRepository $partenaireRepository, SerializerInterface $serializer)
+    {
+
     }
 }

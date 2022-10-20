@@ -7,18 +7,28 @@
 {% block body %}
     <div class="title-main">
         <h1>Fitness zone admin</h1>
+        <h2>Liste des partenaires</h2>
     </div>
+
+
+    <form class="form-inline my-2 my-lg-0" id="form_search" data-path="{{ path('partenaire.search') }}" method="POST">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+
     <form id="ajax">
         <div class="form-check d-flex justify-content-end form-switch me-5">
         <input class="form-check-input mx-3" type="checkbox" name="status" id="status" value="1" >
         <label class="form-check-label me-4 pe-3" for="status">Structure active seulement</label>
         </div>
     </form>
+
 <div class="container-table100" id="ajax-content">
 {% include '_partials/_content.html.twig' %}
 </div>
 {% endblock %}
 
-{% block javascripts %}
-    <script src="{{ asset('assets/js/filter.js') }}"></script>
+{% block javascripts %}<script src="{{ asset('assets/js/filter.js') }}"></script>
+    <script src="{{ asset('assets/js/search.js') }}"></script>
 {% endblock %}

@@ -8,6 +8,11 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-4">
+            {{ message }}
+        </div>
+    {% endfor %}
 
     <section class="text-center container my-3">
         <div class="row">
@@ -16,6 +21,7 @@
                     {% if error %}
                         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                     {% endif %}
+
 
                     {% if app.user %}
                         <div class="mb-3">

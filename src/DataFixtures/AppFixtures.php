@@ -47,7 +47,8 @@ class AppFixtures extends Fixture
                 ->setPassword($this->passwordHasher->hashPassword($partenaire, 'password'))
                 ->setAddress($this->faker->address)
                 ->setCity($this->faker->city)
-                ->setZipcode($this->faker->countryCode);
+                ->setZipcode($this->faker->countryCode)
+                ->setIsVerified(mt_rand(0, 1));
 
             $partenaires[] = $partenaire;
             $manager->persist($partenaire);
@@ -76,7 +77,9 @@ class AppFixtures extends Fixture
                 ->setCity($this->faker->city)
                 ->setZipcode($this->faker->countryCode)
                 ->setStructureName($this->faker->name)
-                ->setUserPartenaire($partenaires[mt_rand(0, count($partenaires) -1)]);
+                ->setUserPartenaire($partenaires[mt_rand(0, count($partenaires) -1)])
+                ->setIsVerified(mt_rand(0, 1));
+
 
 
 
@@ -87,13 +90,6 @@ class AppFixtures extends Fixture
             $manager->persist($structure);
 
         }
-
-
-
-
-
-
-
         $manager->flush();
     }
 }

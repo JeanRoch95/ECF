@@ -65,9 +65,6 @@ class UserPartenaireRepository extends ServiceEntityRepository implements Passwo
                 $query->andWhere('a.status = :PART')
                     ->setParameter(':PART', $filter);
             }
-
-
-
             $query
                 ->orderBy('a.partenaireName');
         return $query->getQuery()->getResult();
@@ -83,6 +80,18 @@ class UserPartenaireRepository extends ServiceEntityRepository implements Passwo
         }
 
         return $query->getQuery()->getSingleScalarResult();
+    }
+
+
+
+    public function findBySearch($search): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.nom LIKE :val')
+            ->setParameter('val', '%'.$search.'%')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
 //    /**
