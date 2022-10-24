@@ -43,7 +43,7 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
     private ?File $imageFile = null;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private string $imageName;
+    private ?string $imageName = null;
 
     #[ORM\Column]
     private ?bool $status = null;
