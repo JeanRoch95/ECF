@@ -24,9 +24,9 @@ class MailService
      */
     public function sendEmail(
         string $to,
+        string $subject,
         string $htmlTemplate,
         array $context,
-        string $subject,
         string $from = 'tomasojeanroch@gmail.com',
 
     )
@@ -35,9 +35,9 @@ class MailService
 
         $email = new TemplatedEmail();
         $email->to($to);
+        $email->subject($subject);
         $email->htmlTemplate($htmlTemplate);
         $email->context($context);
-        $email->subject($subject);
         $email->from($from);
 
         $this->mailer->send($email);
