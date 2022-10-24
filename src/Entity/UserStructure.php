@@ -174,7 +174,7 @@ class UserStructure implements UserInterface, PasswordAuthenticatedUserInterface
         $this->imageName = $imageName;
     }
 
-    public function getImageName(): string
+    public function getImageName(): ?string
     {
         return $this->imageName;
     }

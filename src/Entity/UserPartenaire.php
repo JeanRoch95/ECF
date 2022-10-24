@@ -171,7 +171,7 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
         $this->imageName = $imageName;
     }
 
-    public function getImageName(): string
+    public function getImageName(): ?string
     {
         return $this->imageName;
     }
