@@ -27,7 +27,8 @@ class MailService
         string $to,
         string $htmlTemplate,
         array $context,
-        string $from = 'tomasojeanroch@gmail.com'
+        string $subject,
+        string $from = 'tomasojeanroch@gmail.com',
 
     )
 
@@ -39,6 +40,7 @@ class MailService
         $email->to($to);
         $email->htmlTemplate($htmlTemplate);
         $email->context($context);
+        $email->subject($subject);
         $email->from($from);
 
         $this->mailer->send($email);

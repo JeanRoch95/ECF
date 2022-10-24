@@ -69,7 +69,7 @@ class VerifyEmailController extends AbstractController
         $user = $partenaireRepository->find($id);
 
         if(null === $user){
-            return $this->redirectToRoute('partenaire.show.show', ['id' => $id]);
+            return $this->redirectToRoute('partenaire.show', ['id' => $id]);
         }
 
 
