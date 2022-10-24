@@ -4,7 +4,6 @@ namespace App\service;
 
 
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
@@ -33,8 +32,6 @@ class MailService
     )
 
     {
-
-
 
         $email = new TemplatedEmail();
         $email->to($to);
