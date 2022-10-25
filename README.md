@@ -46,7 +46,8 @@ e projet comprend des données factices pour vous permettre de tester rapidement
 
 Pour modifier vos fixtures rendez vous dans le fichier : ```src/DataFixtures/``` Exemple :
 
-```public function load(ObjectManager $manager): void
+```
+public function load(ObjectManager $manager): void
     {
 $partenaire = new UserPartenaire();
             $partenaire
@@ -65,3 +66,4 @@ $partenaire = new UserPartenaire();
             $manager->persist($partenaire);
 
         }
+```
