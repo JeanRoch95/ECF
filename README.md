@@ -16,7 +16,7 @@ Cloner le projet dans le dossier de votre choix puis ouvrez le avec l'éditeur d
 
 Lancez les commandes dans le terminal de votre éditeur dans cet ordre : 
 
-* 1 composer install , afin d'installer toutes les dépendances dans votre projet
+* 1 ```composer install``` , afin d'installer toutes les dépendances dans votre projet
 
 * 2 Installer la base de donnée MySQL. Pour paramétrer la création de votre base de donnée, rdv dans le fichier .env du projet, et modifier la variable d'environnement selon vos paramètres :
 DATABASE_URL=mysql://User:Password@127.0.0.1:3306/nameDatabasse?serverVersion=5.7
