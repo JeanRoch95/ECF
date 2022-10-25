@@ -82,6 +82,7 @@ Une fois vos paramètres personnalisés, relancer la commande : ```php bin/conso
 * [Doctrine](https://symfony.com/doc/current/doctrine.html)
 * [SymfonyCast VerifyEmailBundle](https://github.com/SymfonyCasts/verify-email-bundle)
 * [VichUploaderBundle](https://symfony.com/bundles/EasyAdminBundle/2.x/integration/vichuploaderbundle.html)
+* [Knp_paginator](https://github.com/KnpLabs/KnpPaginatorBundle)
 * [Faker](https://github.com/fzaninotto/Faker)
 
 ----
