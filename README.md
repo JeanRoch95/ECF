@@ -27,4 +27,41 @@ Lancez les commandes dans le terminal de votre éditeur dans cet ordre :
 
 * 6 Exécuter les dataFixtures avec la commande : ```php bin/console doctrine:fixtures:load```
 
-* 7 Vous pouvez maintenant accéder à votre portfolio en vous connectant au serveur : ```symfony server -d
+* 7 Vous pouvez maintenant accéder à votre portfolio en vous connectant au serveur : ```symfony server -d```
+
+----
+
+## Démarrage 
+
+Une fois sur l'application vous n'aurez plus qu'a vous connecter. L'application crée des utilisateurs Admins/Partenaires/structures. 
+Par défaut, les logins admin sont : 
+* Identifiant : ```admin@admin.fr```
+* password : ```password```
+
+----
+
+## Fixtures 
+
+e projet comprend des données factices pour vous permettre de tester rapidement le portfolio.
+
+Pour modifier vos fixtures rendez vous dans le fichier : ```src/DataFixtures/``` Exemple :
+
+```public function load(ObjectManager $manager): void
+    {
+$partenaire = new UserPartenaire();
+            $partenaire
+                ->setEmail($this->faker->email)
+                ->setDescription($this->faker->text(20))
+                ->setStatus(mt_rand(0, 1))
+                ->setPhone($this->faker->phoneNumber)
+                ->setPartenaireName($this->faker->name)
+                ->setPassword($this->passwordHasher->hashPassword($partenaire, 'password'))
+                ->setAddress($this->faker->address)
+                ->setCity($this->faker->city)
+                ->setZipcode($this->faker->countryCode)
+                ->setIsVerified(mt_rand(0, 1));
+
+            $partenaires[] = $partenaire;
+            $manager->persist($partenaire);
+
+        }
