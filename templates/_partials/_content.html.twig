@@ -1,31 +1,31 @@
     <div class="wrap-table100">
         <div class="table">
             <div class="row header">
-                <div class="cell">
+                <div class="cell text-center">
                     Nom du partenaire
                 </div>
-                <div class="cell">
+                <div class="cell text-center">
                     Ville
                 </div>
-                <div class="cell">
+                <div class="cell text-center">
                     Status
                 </div>
-                <div class="cell">
+                <div class="cell text-center">
                     Editer
                 </div>
             </div>
             {% for partenaire in partenaires %}
                 <div class="row">
-                    <div class="cell" data-title="Full Name">
+                    <div class="cell text-center" data-title="Nom partenaire">
                         {{ partenaire.partenaireName }}
                     </div>
-                    <div class="cell" data-title="Age">
+                    <div class="cell text-center" data-title="Ville">
                         {{ partenaire.city }}
                     </div>
-                    <div class="cell" data-title="Job Title">
+                    <div class="cell text-center" data-title="Status">
                         {{ partenaire.status }}
                     </div>
-                    <div class="cell" data-title="Editer">
+                    <div class="cell text-center" data-title="Editer">
                         <button type="button" class="btn btn-primary"><a class="btn-more" href={{ path('partenaire.show', {id: partenaire.id}) }}>Voir</a></button>
                     </div>
                 </div>
