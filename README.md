@@ -64,6 +64,32 @@ $partenaire = new UserPartenaire();
 
             $partenaires[] = $partenaire;
             $manager->persist($partenaire);
+            $manager->flush();
 
         }
 ```
+Une fois vos paramètres personnalisés, relancer la commande : ```php bin/console doctrine:fixtures:load```
+
+----
+
+## Fabriqué avec
+
+* [Symfony](https://symfony.com/) - Framework PHP Symfony Latest Stable Release: 6.1
+
+#### Bundle utilisé pour ce projet : 
+
+* [Mailer](https://symfony.com/doc/current/mailer.html)
+* [Doctrine](https://symfony.com/doc/current/doctrine.html)
+* [SymfonyCast VerifyEmailBundle](https://github.com/SymfonyCasts/verify-email-bundle)
+* [VichUploaderBundle](https://symfony.com/bundles/EasyAdminBundle/2.x/integration/vichuploaderbundle.html)
+* [Faker](https://github.com/fzaninotto/Faker)
+
+----
+
+## Version
+
+Version 0.0.1
+
+## Auteurs
+
+[Jean-Roch Tomaso](https://github.com/JeanRoch95)
