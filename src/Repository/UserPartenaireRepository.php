@@ -67,7 +67,7 @@ class UserPartenaireRepository extends ServiceEntityRepository implements Passwo
             }
             $query
                 ->orderBy('a.partenaireName');
-        return $query->getQuery()->getResult();
+        return $query->getQuery();
     }
 
     public function getTotalPart($filter){

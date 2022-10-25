@@ -66,10 +66,9 @@ class RegistrationController extends AbstractController
 
             $service->sendEmail(
                 $user->getEmail(),
-                'pages/registration/confirmation_email.html.twig',
-                ['signedUrl' => $signatureComponents->getSignedUrl()],
-                'Confirmation de votre Email'
-
+                subject: 'Confirmation de votre Email',
+                htmlTemplate:'pages/registration/confirmation_email.html.twig',
+                context:['signedUrl' => $signatureComponents->getSignedUrl()],
             );
 
             $this->addFlash(

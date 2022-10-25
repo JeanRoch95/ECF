@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\UserPartenaireRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,24 +16,24 @@ class MainController extends AbstractController
 {
     #[Route('/', name: 'main')]
     #[IsGranted('ROLE_ADMIN')]
-    public function index(Request $request, UserPartenaireRepository $repository): Response
+    public function index(Request $request, UserPartenaireRepository $repository, PaginatorInterface $paginator): Response
     {
-
 
         $filter = $request->get("status");
 
-        $partenaires = $repository->getPaginatedPart($filter);
-
         $total = $repository->getTotalPart($filter);
 
+        $partenaires = $paginator->paginate(
+            $repository->getPaginatedPart($filter), /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            5/*limit per page*/
+        );
 
         if($request->get('ajax')){
             return new JsonResponse([
                 'content' => $this->renderView('_partials/_content.html.twig', compact('partenaires', 'total'))
             ]);
         }
-
-        $partenaire = $repository->findAll();
 
         return $this->render('main/index.html.twig', compact('partenaires', 'total'));
     }

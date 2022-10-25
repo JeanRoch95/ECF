@@ -23,13 +23,16 @@
                         {{ partenaire.city }}
                     </div>
                     <div class="cell text-center" data-title="Status">
-                        {{ partenaire.status }}
+                        {{ partenaire.status ? 'actif' : 'inactif' }}
                     </div>
                     <div class="cell text-center" data-title="Editer">
                         <button type="button" class="btn btn-primary"><a class="btn-more" href={{ path('partenaire.show', {id: partenaire.id}) }}>Voir</a></button>
                     </div>
                 </div>
             {% endfor %}
+            <div class="navigation">
+                {{ knp_pagination_render(partenaires) }}
+            </div>
         </div>
     </div>
 </div>
