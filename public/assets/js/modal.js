@@ -7,8 +7,6 @@ exampleModal.addEventListener('show.bs.modal', function (event) {
 
     // Récupéré l'attribut url
     modalLink.href = button.dataset.url;
-
-
 })
 
 
