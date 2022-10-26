@@ -28,6 +28,7 @@ class AppFixtures extends Fixture
 
         $admin = new UserAdmin();
         $admin->setEmail('admin@admin.fr')
+            ->setStatus(1)
             ->setPassword($this->passwordHasher->hashPassword($admin, 'password'));
  
         $manager->persist($admin);
