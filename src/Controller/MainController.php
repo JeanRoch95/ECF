@@ -14,28 +14,38 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class MainController extends AbstractController
 {
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
     #[Route('/', name: 'main')]
     #[IsGranted('ROLE_ADMIN')]
     public function index(Request $request, UserPartenaireRepository $repository, PaginatorInterface $paginator): Response
     {
 
+        $limit = 10;
+
+        $page = $request->query->get("page", 1);
+
         $filter = $request->get("status");
+
+        $partenaires = $repository->getPaginatedPart($page, $limit, $filter);
 
         $total = $repository->getTotalPart($filter);
 
-        $partenaires = $paginator->paginate(
-            $repository->getPaginatedPart($filter), /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            5/*limit per page*/
-        );
+//       /* $partenaires = $paginator->paginate(
+//            $repository->getPaginatedPart($filter), /* query NOT result */
+//            $request->query->getInt('page', 1), /*page number*/
+//            5/*limit per page*/
+//        );*/
 
         if($request->get('ajax')){
             return new JsonResponse([
-                'content' => $this->renderView('_partials/_content.html.twig', compact('partenaires', 'total'))
+                'content' => $this->renderView('_partials/_content.html.twig', compact('partenaires', 'total', 'filter', 'page', 'limit'))
             ]);
         }
 
-        return $this->render('main/index.html.twig', compact('partenaires', 'total'));
+        return $this->render('main/index.html.twig', compact('partenaires', 'total', 'limit', 'page'));
     }
 
     #[Route('partenaire/search', name: 'partenaire.search', methods: ['GET', 'POST'])]

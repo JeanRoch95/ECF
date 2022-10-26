@@ -1,4 +1,6 @@
 {% extends 'base.html.twig' %}
+
+
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
         {% endblock %}
@@ -18,6 +20,7 @@
             <p class="text-center">{{ message }}</p>
         </div>
     {% endfor %}
+
 
     <form id="ajax">
         <div class="form-check d-flex justify-content-end form-switch me-5">

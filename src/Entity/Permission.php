@@ -20,7 +20,7 @@ class Permission
     private string $name;
 
     #[ORM\ManyToMany(targetEntity: UserStructure::class, inversedBy: 'permissions')]
-    #[ORM\JoinColumn(name: 'permission_id', referencedColumnName: 'permID')]
+    #[ORM\JoinColumn(name: 'permission_id', referencedColumnName: 'permID', onDelete: 'CASCADE')]
     private Collection $usersStructures;
 
 

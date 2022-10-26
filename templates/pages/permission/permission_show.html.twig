@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Permission
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-4 mb-4 w-25 m-auto">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-danger mt-4 mb-4 w-25 m-auto">
+                <p class="text-center">{{ message }}</p>
+            </div>
+        {% endfor %}
+        <a href="{{ path('permission.new') }}"><button class="btn btn-primary">Créer permission</button></a>
+         <table class="table">
+             <thead>
+             <tr>
+                 <th scope="col">Nom</th>
+                 <th scope="col"></th>
+             </tr>
+             </thead>
+             <tbody>
+     {% for permission in permissions %}
+             <tr>
+                 <th scope="row">{{ permission.name }}</th>
+                 <td colspan="2"><a href="{{ path('permission.delete', {id: permission.permId}) }}"><button class="btn btn-warning">Supprimer</button></a></td>
+             </tr>
+    {% endfor %}
+             </tbody>
+         </table>
+    </div>
+{% endblock %}

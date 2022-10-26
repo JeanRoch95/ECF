@@ -49,16 +49,6 @@ class UserStructureEditType extends AbstractType
                     'class' => 'form-label mt-4'
                 ],
             ])
-            ->add('imageFile', VichImageType::class, [
-                'attr' => [
-                    'class' => 'form-control form'
-                ],
-                'required' => false,
-                'label' => 'Numéro de téléphone',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-            ])
             ->add('submit', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-primary m-4'
