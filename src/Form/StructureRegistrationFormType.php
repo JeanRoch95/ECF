@@ -135,7 +135,7 @@ class StructureRegistrationFormType extends AbstractType
                 'label_attr' => [
                     'class' => 'form-label mt-4 me-4'
                 ],
-                'choice_label' => 'email',
+                'choice_label' => 'partenaireName',
                 'multiple' => false
             ])
             ->add('submit', SubmitType::class, [
