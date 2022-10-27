@@ -24,15 +24,6 @@ class UserPartenaireEditType extends AbstractType
                     'class' => 'form-label mt-4'
                 ],
             ])
-            ->add('PartenaireName', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control form'
-                ] ,
-                'label' => 'Nom de la structure',
-                'label_attr' => [
-                    'class' => 'form-label mt-4'
-                ],
-            ])
             ->add('phone', TextType::class, [
                 'attr' => [
                     'class' => 'form-control form'

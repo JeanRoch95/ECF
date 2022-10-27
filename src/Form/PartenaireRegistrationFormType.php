@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\UserPartenaire;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -15,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PartenaireRegistrationFormType extends AbstractType
@@ -71,7 +74,7 @@ class PartenaireRegistrationFormType extends AbstractType
                 'attr' => [
                     'class' => 'form-control form'
                 ],
-                'label' => 'Nom comlet',
+                'label' => 'Nom du partenaire',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
@@ -121,10 +124,11 @@ class PartenaireRegistrationFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'minMessage' => 'Votre mot de passe doit contenir au minimum 8 caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                    new Regex('#^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$#', 'Votre mot de passe doit contenir : 8 caractères minimum || 1 Majuscule || Un caractère spécial || 1 chiffre ')
                 ],
             ])
             ->add('submit', SubmitType::class, [

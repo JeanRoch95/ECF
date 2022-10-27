@@ -18,6 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class StructureRegistrationFormType extends AbstractType
@@ -127,6 +128,8 @@ class StructureRegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                    new Regex('#^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$#', 'Votre mot de passe doit contenir : 8 caractères minimum || 1 Majuscule || Un caractère spécial || 1 chiffre ')
+
                 ],
             ])
             ->add('userPartenaire', EntityType::class, [

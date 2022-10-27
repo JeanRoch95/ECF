@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserPartenaireRepository::class)]
@@ -37,6 +38,7 @@ class UserPartenaire implements UserInterface, PasswordAuthenticatedUserInterfac
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Regex('#^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$#', message: 'Mot de passe trop faible')]
     private ?string $password = null;
 
     #[Vich\UploadableField(mapping: 'user_images', fileNameProperty: 'imageName')]
