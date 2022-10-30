@@ -211,11 +211,12 @@ iframe {
 
 @media(max-width:768px) {
     .row {
-        border-bottom: 1px solid #f2f2f2;
+        border: 1px solid #f2f2f2;
         padding-bottom: 18px;
         padding-top: 30px;
         padding-right: 15px;
-        margin: 0
+        margin: 0;
+        margin-bottom: 10px;
     }
     .row .cell {
         border: none;

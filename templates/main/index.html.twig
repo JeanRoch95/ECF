@@ -7,6 +7,7 @@
 {% block title %}Accueil admin{% endblock %}
 
 {% block body %}
+    {% include '_partials/_nav.html.twig' %}
     <div class="fix-top">
         <p>Page d'administration des partenaires et structures de la marque ZoneSport</p>
     </div>
@@ -25,7 +26,7 @@
     <form id="ajax">
         <div class="form-check d-flex justify-content-end form-switch me-5">
         <input class="form-check-input mx-3" type="checkbox" name="status" id="status" value="1" >
-        <label class="form-check-label me-4 pe-3" for="status">Structure active seulement</label>
+        <label class="form-check-label me-4 pe-3" for="status">Partenaires actifs seulement</label>
         </div>
     </form>
 

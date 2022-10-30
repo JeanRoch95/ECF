@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+    {% include '_partials/_nav.html.twig' %}
+
     <div class="container">
         {% for message in app.flashes('success') %}
             <div class="alert alert-success mt-4 mb-4 w-25 m-auto">

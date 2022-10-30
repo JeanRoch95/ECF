@@ -31,9 +31,7 @@
                 <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
                 Accueil
             </a>
-            {% endif %}
         </li>
-            {% if 'ROLE_ADMIN' in app.user.roles %}
         <li class="nav-item">
             <a href="{{ path('partenaire.registry') }}" class="nav-link text-dark font-italic">
                 <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
@@ -44,6 +42,12 @@
             <a href="{{ path('structure.registry') }}" class="nav-link text-dark font-italic">
                 <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
                 Ajouter structures
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('permission.show') }}" class="nav-link text-dark font-italic">
+                <i class="fa fa-cubes mr-3 text-primary fa-fw"></i>
+                Permissions
             </a>
         </li>
                 {% endif %}

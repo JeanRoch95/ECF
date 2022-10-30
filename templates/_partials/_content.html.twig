@@ -39,11 +39,12 @@
 
                 {% set pages = (total / limit)|round(0, 'ceil') %}
                 {% for item in 1..pages %}
-                    <li class="{{ (page == item) ? 'active' : '' }}">
-                        <a href="?page={{ item }}&{{queryString}}">{{ item }}</a>
+                <nav aria-label="Page navigation example">
+                    <li class="{{ (page == item) ? 'active' : '' }} page item" style="padding: 0">
+                        <a class="page-link" href="?page={{ item }}&{{queryString}}">{{ item }}</a>
                     </li>
+                </nav>
                 {% endfor %}
-
 
             </ul>
         </div>

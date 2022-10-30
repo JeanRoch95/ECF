@@ -1,4 +1,6 @@
 body{
+    margin: 0;
+    padding: 0;
     background: #6f9bc9;
     font-family: 'Bitter', serif;
 }
