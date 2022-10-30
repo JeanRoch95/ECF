@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class UserPartenairePasswordType extends AbstractType
 {
@@ -44,6 +45,9 @@ class UserPartenairePasswordType extends AbstractType
                 'label' => 'Nouveau mot de passe',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
+                ],
+                'constraints' => [
+                    new Regex('#^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])\S*$#', 'Votre mot de passe doit contenir : 8 caractères minimum || 1 Majuscule || Un caractère spécial || 1 chiffre ')
                 ]
             ])
             ->add('submit', SubmitType::class, [

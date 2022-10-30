@@ -52,7 +52,7 @@ class VerifyEmailController extends AbstractController
         $user->setIsVerified(1);
         $manager->flush($user);
 
-        $this->addFlash('success', 'Votre email a bien été vérifié');
+        $this->addFlash('success', 'Votre email a bien été vérifié, veuillez vous connecter et modifier votre mot de passe');
 
         return $this->redirectToRoute('structure.edit.password', ['id' => $id]);
     }
@@ -86,7 +86,7 @@ class VerifyEmailController extends AbstractController
         $user->setIsVerified(1);
         $manager->flush($user);
 
-        $this->addFlash('success', 'Votre email a bien été vérifié');
+        $this->addFlash('success', 'Votre email a bien été vérifié, veuillez vous connecter et modifier votre mot de passe');
 
         return $this->redirectToRoute('partenaire.edit.password', ['id' => $id]);
     }
