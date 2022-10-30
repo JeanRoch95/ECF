@@ -34,7 +34,7 @@ class AppFixtures extends Fixture
         $manager->persist($admin);
 
         $partenaires = [];
-        for($i = 0; $i < 50; $i++) {
+        for($i = 0; $i < 20; $i++) {
 
             $partenaire = new UserPartenaire();
             $partenaire
@@ -68,7 +68,7 @@ class AppFixtures extends Fixture
                 ->setCity($this->faker->city)
                 ->setZipcode($this->faker->countryCode)
                 ->setStructureName($this->faker->name)
-                ->setUserPartenaire($partenaires[mt_rand(0, count($partenaires) -1)])
+                ->setUserPartenaire($partenaires[mt_rand(1, count($partenaires) -1)])
                 ->setIsVerified(mt_rand(0, 1));
             $manager->persist($structure);
 
