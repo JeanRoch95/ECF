@@ -57,6 +57,7 @@ class PermissionController extends AbstractController
     }
 
     #[Route('permission/delete/{id}', name: 'permission.delete', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete($id, PermissionRepository $repository, EntityManagerInterface $manager): Response
     {
 

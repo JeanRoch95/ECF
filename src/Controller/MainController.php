@@ -33,12 +33,6 @@ class MainController extends AbstractController
 
         $total = $repository->getTotalPart($filter);
 
-//       /* $partenaires = $paginator->paginate(
-//            $repository->getPaginatedPart($filter), /* query NOT result */
-//            $request->query->getInt('page', 1), /*page number*/
-//            5/*limit per page*/
-//        );*/
-
         if($request->get('ajax')){
             return new JsonResponse([
                 'content' => $this->renderView('_partials/_content.html.twig', compact('partenaires', 'total', 'filter', 'page', 'limit'))
@@ -48,9 +42,4 @@ class MainController extends AbstractController
         return $this->render('main/index.html.twig', compact('partenaires', 'total', 'limit', 'page'));
     }
 
-    #[Route('partenaire/search', name: 'partenaire.search', methods: ['GET', 'POST'])]
-    public function search(Request $request, UserPartenaireRepository $partenaireRepository, SerializerInterface $serializer)
-    {
-
-    }
 }

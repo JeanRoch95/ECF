@@ -13,6 +13,11 @@
             <p class="text-center">{{ message }}</p>
         </div>
     {% endfor %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-success mt-4 mb-4 w-25 m-auto">
+            <p class="text-center">{{ message }}</p>
+        </div>
+    {% endfor %}
 
     <section class="text-center container my-3">
         <div class="row">
