@@ -94,3 +94,9 @@ Version 0.0.1
 ## Auteurs
 
 [Jean-Roch Tomaso](https://github.com/JeanRoch95)
+
+## Site hébergé
+
+[Accéder au site](https://zonesportadmin.herokuapp.com/login)
+
+Utiliser les identifiants Fixtures Admin pour vous connecter et tester le site déployé.
